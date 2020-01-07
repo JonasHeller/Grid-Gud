@@ -4,6 +4,7 @@ from Battery import Battery
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp
+from helpers import get_all_cables
 
 
 houses = loadhouse('../Data/wijk1_huizen.csv')
@@ -68,9 +69,6 @@ while True:
 result = makejson(batterydict)
 #pp.pprint(result)
 
-all_cables = []
-for battery in result:
-    for house in battery['huizen']:
-        all_cables += house['kabels']
+all_cables = get_all_cables(result)
 print(len(all_cables), 9 * len(all_cables))
 

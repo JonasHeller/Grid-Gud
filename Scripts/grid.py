@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 from loadfiles import loadbattery, loadhouse
 
-def gridplotter(jsonpaths):
-    houses = loadhouse('../Data/wijk2_huizen.csv')
-    batterijen = loadbattery('../Data/wijk2_batterijen.csv')
+def gridplotter(jsonpaths, batterypath, housespath):
+    houses = loadhouse(housespath)
+    batterijen = loadbattery(batterypath)
 
     batteryX = []
     batteryY = []

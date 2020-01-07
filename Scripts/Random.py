@@ -7,8 +7,12 @@ import pprint as pp
 from helpers import get_all_cables
 from grid import gridplotter
 
-houses = loadhouse('../Data/wijk1_huizen.csv')
-batterijennew = loadbattery('../Data/wijk1_batterijen.csv')
+
+housespath = '../Data/wijk2_huizen.csv'
+batterypath = '../Data/wijk2_batterijen.csv'
+
+houses = loadhouse(housespath)
+batterijennew = loadbattery(batterypath)
 
 while True:
     batterydict = {}
@@ -69,7 +73,7 @@ while True:
 result = makejson(batterydict)
 pp.pprint(result)
 
-gridplotter(result)
+gridplotter(result, batterypath, housespath)
 
 all_cables = get_all_cables(result)
 print(f"amount of cables: {len(all_cables)} and the costs: {9 * len(all_cables)}")

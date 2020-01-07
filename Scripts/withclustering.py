@@ -6,8 +6,11 @@ import pprint as pp
 from helpers import *
 from grid import gridplotter
 
-houseslist = loadhouse('../Data/wijk2_huizen.csv')
-batterieslist = loadbattery('../Data/wijk2_batterijen.csv')
+housespath = '../Data/wijk2_huizen.csv'
+batterypath = '../Data/wijk2_batterijen.csv'
+
+houseslist = loadhouse(housespath)
+batterieslist = loadbattery(batterypath)
 
 
 houses = []
@@ -89,6 +92,6 @@ for house in houses_left:
 
 print(houses_left)
 result = makejson(batteries)
-gridplotter(result)
+gridplotter(result, batterypath, housespath)
 all_cables = get_all_cables(result)
 print(len(all_cables), 9 * len(all_cables))

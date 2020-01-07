@@ -4,9 +4,10 @@ from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp
 from helpers import *
+from grid import gridplotter
 
-houseslist = loadhouse('../Data/wijk1_huizen.csv')
-batterieslist = loadbattery('../Data/wijk1_batterijen.csv')
+houseslist = loadhouse('../Data/wijk2_huizen.csv')
+batterieslist = loadbattery('../Data/wijk2_batterijen.csv')
 
 
 houses = []
@@ -59,24 +60,25 @@ for house in houses_left:
 
 houses_left = get_houses_left(houses)
 
-for battery in batteries:
-    most_capacity = batteries[battery]
-    cap_needed = houses_left[0].output - (most_capacity.capacity - most_capacity.currentload)
+if len(houses_left) != 0:
+    for battery in batteries:
+        most_capacity = batteries[battery]
+        cap_needed = houses_left[0].output - (most_capacity.capacity - most_capacity.currentload)
 
-    lowest = [100, 1]
-    for house in most_capacity.connected_houses:
-        if house.output > cap_needed and house.output < lowest[0]:
-            lowest = [house.output, house]
+        lowest = [100, 1]
+        for house in most_capacity.connected_houses:
+            if house.output > cap_needed and house.output < lowest[0]:
+                lowest = [house.output, house]
 
-    try:
-        for battery in batteries:
-            if batteries[battery].capacity_check(lowest[1]) and batteries[battery] != most_capacity:
-                batteries[battery].add_house(lowest[1])
-                most_capacity.remove_house(lowest[1])
-                most_capacity.add_house(houses_left[0])
-                break
-    except:
-        break
+        try:
+            for battery in batteries:
+                if batteries[battery].capacity_check(lowest[1]) and batteries[battery] != most_capacity:
+                    batteries[battery].add_house(lowest[1])
+                    most_capacity.remove_house(lowest[1])
+                    most_capacity.add_house(houses_left[0])
+                    break
+        except:
+            break
 
 houses_left = get_houses_left(houses)
 
@@ -87,5 +89,6 @@ for house in houses_left:
 
 print(houses_left)
 result = makejson(batteries)
+gridplotter(result)
 all_cables = get_all_cables(result)
 print(len(all_cables), 9 * len(all_cables))

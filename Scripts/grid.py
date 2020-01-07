@@ -2,39 +2,45 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 from loadfiles import loadbattery, loadhouse
 
-houses = loadhouse('../Data/wijk1_huizen.csv')
-batterijen = loadbattery('../Data/wijk1_batterijen.csv')
+def gridplotter(jsonpaths):
+    houses = loadhouse('../Data/wijk2_huizen.csv')
+    batterijen = loadbattery('../Data/wijk2_batterijen.csv')
 
-batteryX = []
-batteryY = []
-for battery in batterijen:
-    batteryX.append(int(battery[0]))
-    batteryY.append(int(battery[1]))
+    batteryX = []
+    batteryY = []
+    for battery in batterijen:
+        batteryX.append(int(battery[0]))
+        batteryY.append(int(battery[1]))
 
-housesX = []
-housesY = []
-for house in houses:
-    temp = house.replace(' ', '').split(',')
-    temp = [float(i) for i in temp]
+    housesX = []
+    housesY = []
+    for house in houses:
+        temp = house.replace(' ', '').split(',')
+        temp = [float(i) for i in temp]
 
-    housesX.append(int(temp[0]))
-    housesY.append(int(temp[1]))
-
-for item in housesX:
-    print(item)
-
-plt.axis([0, 50, 0, 50])
-plt.locator_params(nbins=10)
-
-# Show the major grid lines with dark grey lines
-plt.grid(b=True, which='major', color='#666666', linestyle='-')
-
-# Show the minor grid lines with very faint and almost transparent grey lines
-plt.minorticks_on()
-plt.grid(b=True, which='minor', color='#666666', linestyle='-', alpha=0.1)
+        housesX.append(int(temp[0]))
+        housesY.append(int(temp[1]))
 
 
-plt.plot(housesX, housesY, '^g')
-plt.plot(batteryX, batteryY, 'Hr')
+    all_cables = []
+    for battery in jsonpaths:
+        for house in battery['huizen']:
+            all_cables.append(house['kabels'])
 
-plt.show()
+    plt.axis([-1, 51, -1, 51])
+    plt.locator_params(nbins=10)
+
+    # Show the major grid lines with dark grey lines
+    plt.grid(b=True, which='major', color='#666666', linestyle='-')
+
+    # Show the minor grid lines with very faint and almost transparent grey lines
+    plt.minorticks_on()
+    plt.grid(b=True, which='minor', color='#666666', linestyle='-', alpha=0.1)
+
+    plt.plot(housesX, housesY, '^g')
+    plt.plot(batteryX, batteryY, 'Hr')
+
+    for path in all_cables:
+        plt.plot([i[0] for i in path], [i[1] for i in path])
+
+    plt.show()

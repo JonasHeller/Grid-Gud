@@ -5,7 +5,7 @@ from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp
 from helpers import get_all_cables
-
+from grid import gridplotter
 
 houses = loadhouse('../Data/wijk1_huizen.csv')
 batterijennew = loadbattery('../Data/wijk1_batterijen.csv')
@@ -19,7 +19,7 @@ while True:
     for house in houses:
         temp = house.replace(' ', '').split(',')
         temp = [float(i) for i in temp]
-        
+
         housesdict[(temp[0], temp[1])] = House((temp[0], temp[1]), temp[2])
 
     for battery in batterydict:
@@ -67,8 +67,9 @@ while True:
         break
 
 result = makejson(batterydict)
-#pp.pprint(result)
+pp.pprint(result)
+
+gridplotter(result)
 
 all_cables = get_all_cables(result)
-print(len(all_cables), 9 * len(all_cables))
-
+print(f"amount of cables: {len(all_cables)} and the costs: {9 * len(all_cables)}")

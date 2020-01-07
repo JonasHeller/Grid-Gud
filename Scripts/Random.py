@@ -2,6 +2,8 @@ import random
 from House import House
 from Battery import Battery
 from loadfiles import loadbattery, loadhouse
+from makeitjson import makejson
+import pprint as pp
 
 
 houses = loadhouse('../Data/wijk1_huizen.csv')
@@ -63,11 +65,12 @@ while True:
     if len(list(housesdict.keys())) == 0:
         break
 
-print('_______________________')
-for item in batterydict:
-    print(batterydict[item])
-try:
-    print(housesdict[next(iter(housesdict))])
-except:
-    print('none left')
+result = makejson(batterydict)
+#pp.pprint(result)
+
+all_cables = []
+for battery in result:
+    for house in battery['huizen']:
+        all_cables += house['kabels']
+print(len(all_cables), 9 * len(all_cables))
 

@@ -31,10 +31,10 @@ plt.grid(b=True, which='major', color='#666666', linestyle='-')
 
 # Show the minor grid lines with very faint and almost transparent grey lines
 plt.minorticks_on()
-plt.grid(b=True, which='minor', color='#666666', linestyle='-', alpha=0.1)
+plt.grid(b=True, which='minor', color='#666666', linestyle='-', alpha=0.1 )
 
 
-plt.plot(housesX, housesY, '^g')
+plt.plot(housesX, housesY, '^g', marker=r'$\s$')
 plt.plot(batteryX, batteryY, 'Hr')
 
 plt.show()

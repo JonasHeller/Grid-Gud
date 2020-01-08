@@ -6,10 +6,12 @@ def get_all_cables(result):
     for battery in result:
 
         # loop over houses in the battery
+        batterycables = []
         for house in battery['huizen']:
 
             # add cabels to the list
-            all_cables += house['kabels']
+            batterycables += house['kabels']
+        all_cables += set(batterycables)
 
     return all_cables
 

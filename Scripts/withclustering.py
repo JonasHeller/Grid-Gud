@@ -119,6 +119,5 @@ result = makejson(batteries)
 # calculate number of cables
 all_cables = get_all_cables(result)
 
-print('Without dubble cables. Number of cables: ', len(all_cables), '. Total cost: ', 9 * len(all_cables))
-print('With dubble cables. Number of cables: ', len(set(all_cables)), '. Total cost: ', 9 * len(set(all_cables)))
+print('With dubble cables. Number of cables: ', len(all_cables), '. Total cost: ', 9 * len(all_cables))
 gridplotter(result, batterypath, housespath)

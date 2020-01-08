@@ -34,8 +34,6 @@ def findpath(start, end, first):
             while i != end[1]:
                 path.append((end[0], i))
                 i += 1
-
-
     else:
         i = start[1]
         if start[1] > end[1]:
@@ -53,9 +51,10 @@ def findpath(start, end, first):
                 path.append((i, end[1]))
                 i -= 1
         else:
-            while i != end[1]:
+            while i != end[0]:
                 path.append((i, end[1]))
                 i += 1
+
 
     path.append(end)
     return path

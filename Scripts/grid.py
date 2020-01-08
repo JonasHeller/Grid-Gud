@@ -21,11 +21,12 @@ def gridplotter(jsonpaths, batterypath, housespath):
         housesX.append(int(temp[0]))
         housesY.append(int(temp[1]))
 
+    colors = ['b', 'c', 'm', 'y', 'k']
 
-    all_cables = []
-    for battery in jsonpaths:
-        for house in battery['huizen']:
-            all_cables.append(house['kabels'])
+    for j in range(len(jsonpaths)):
+        cables = []
+        for house in jsonpaths[j]['huizen']:
+            plt.plot([i[0] for i in house['kabels']], [i[1] for i in house['kabels']], colors[j])
 
     plt.axis([-1, 51, -1, 51])
     plt.locator_params(nbins=10)
@@ -40,7 +41,7 @@ def gridplotter(jsonpaths, batterypath, housespath):
     plt.plot(housesX, housesY, '^g')
     plt.plot(batteryX, batteryY, 'Hr')
 
-    for path in all_cables:
-        plt.plot([i[0] for i in path], [i[1] for i in path])
+    # for path in all_cables:
+    #     plt.plot([i[0] for i in path], [i[1] for i in path], 'g')
 
     plt.show()

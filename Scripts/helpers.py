@@ -68,7 +68,7 @@ def averagex_andy(battery):
         y += abs(house.coord[1] - coord[1])
     avgx = x / len(battery.connected_houses)
     avgy = y / len(battery.connected_houses)
-    if avgy < avgx:
+    if avgy > avgx:
         return 'V'
     else:
         return 'H'

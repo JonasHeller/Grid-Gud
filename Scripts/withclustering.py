@@ -6,8 +6,8 @@ import pprint as pp
 from helpers import get_all_cables, get_houses_left, averagex_andy
 from grid import gridplotter
 
-housespath = '../Data/wijk3_huizen.csv'
-batterypath = '../Data/wijk3_batterijen.csv'
+housespath = '../Data/wijk2_huizen.csv'
+batterypath = '../Data/wijk2_batterijen.csv'
 
 houseslist = loadhouse(housespath)
 batterieslist = loadbattery(batterypath)

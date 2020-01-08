@@ -50,11 +50,11 @@ def findpath(start, end, first):
         i = start[0]
         if start[0] > end[0]:
             while i != end[0]:
-                path.append((i, end[0]))
+                path.append((i, end[1]))
                 i -= 1
         else:
             while i != end[1]:
-                path.append((i, end[0]))
+                path.append((i, end[1]))
                 i += 1
 
     path.append(end)
@@ -69,7 +69,7 @@ def averagex_andy(battery):
         y += abs(house.coord[1] - coord[1])
     avgx = x / len(battery.connected_houses)
     avgy = y / len(battery.connected_houses)
-    if avgy > avgx:
+    if avgy < avgx:
         return 'V'
     else:
         return 'H'

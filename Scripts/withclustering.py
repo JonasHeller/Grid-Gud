@@ -3,11 +3,11 @@ from Battery import Battery
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp
-from helpers import *
+from helpers import get_all_cables, get_houses_left, averagex_andy
 from grid import gridplotter
 
-housespath = '../Data/wijk2_huizen.csv'
-batterypath = '../Data/wijk2_batterijen.csv'
+housespath = '../Data/wijk3_huizen.csv'
+batterypath = '../Data/wijk3_batterijen.csv'
 
 houseslist = loadhouse(housespath)
 batterieslist = loadbattery(batterypath)
@@ -85,13 +85,9 @@ if len(houses_left) != 0:
 
 houses_left = get_houses_left(houses)
 
-for battery in batteries:
-    print(batteries[battery])
-for house in houses_left:
-    print(house)
-
-print(houses_left)
 result = makejson(batteries)
-gridplotter(result, batterypath, housespath)
 all_cables = get_all_cables(result)
-print(len(all_cables), 9 * len(all_cables))
+
+print('Without dubble cables. Number of cables: ', len(all_cables), '. Total cost: ', 9 * len(all_cables))
+print('With dubble cables. Number of cables: ', len(set(all_cables)), '. Total cost: ', 9 * len(set(all_cables)))
+gridplotter(result, batterypath, housespath)

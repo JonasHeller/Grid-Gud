@@ -3,6 +3,7 @@ class House():
         self.coord = coord
         self.output = output
         self.isconnected = False
+        self.batteryconnected = None
 
     def calc_distances(self, batteries):
         self.distances = {}

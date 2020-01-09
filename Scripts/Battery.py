@@ -1,6 +1,7 @@
 class Battery():
-    def __init__(self, coord, capacity):
+    def __init__(self, coord, capacity, index):
         self.coord = coord
+        self.index = index
         self.capacity = capacity
         self.currentload = 0
         self.connected_houses = []
@@ -11,6 +12,7 @@ class Battery():
         self.connected_houses.append(house)
         self.currentload += house.output
         house.isconnected = True
+        house.batteryconnected = self.index
 
     def remove_house(self, house):
 
@@ -18,6 +20,7 @@ class Battery():
         self.connected_houses.remove(house)
         self.currentload -= house.output
         house.isconnected = False
+        house.batteryconnected = None
     
     def capacity_check(self, house):
 

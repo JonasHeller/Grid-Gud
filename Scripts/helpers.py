@@ -127,3 +127,69 @@ def get_closest_cable(cables, endpoint):
     
     # return closest
     return closest
+
+def get_outliers(batteries):
+    outliers = []
+    for index in batteries:
+        battery = batteries[index]
+        for house in battery.connected_houses:
+            if house.distances[index] > 50:
+                outliers.append(house)
+    return outliers
+
+def switchoutliers(outliers, houses, batteries):
+    outliers_distance = []
+    for outlier in outliers:
+        outliers_distance.append([outlier.distances[outlier.batteryconnected], outlier])
+
+    outliers_distance.sort(key=lambda tup: tup[0], reverse=True)
+    
+    for item in outliers_distance:
+        print(outlier)
+        tried_switches = []
+        while True:
+            closest_house = [100, 1]
+            outlier = item[1]
+            # get house closest to outier
+            for house in houses:
+                distance = abs(outlier.coord[0] - house.coord[0]) +abs(outlier.coord[1] - house.coord[1])
+                if distance < closest_house[0] and outlier.batteryconnected != house.batteryconnected:
+                    closest_house[0] = distance
+                    closest_house[1] = house
+
+            # get house to switch with
+            switch_house = [100, 1, 2]
+            for old in batteries[outlier.batteryconnected].connected_houses:
+                if old in outliers:
+                    continue
+                for new in batteries[closest_house[1].batteryconnected].connected_houses:
+                    distance = abs(new.coord[0] - old.coord[0]) +abs(new.coord[1] - old.coord[1])
+                    if distance < switch_house[0]:
+                        switch_house[0] = distance
+                        switch_house[1] = old
+                        switch_house[2] = new
+
+            # try the switch
+            outlier_battery = batteries[outlier.batteryconnected]
+            switch_battery = batteries[closest_house[1].batteryconnected]
+            if switch_battery.currentload + (outlier.output - switch_house[2].output) < switch_battery.capacity and \
+                outlier_battery.currentload + (switch_house[2].output - outlier.output) < outlier_battery.capacity:
+                outlier_battery.remove_house(outlier)
+                switch_battery.add_house(outlier)
+                outlier_battery.add_house(switch_house[2])
+                switch_battery.remove_house(switch_house[2])
+                print("CURRENT OUTLIER", outlier)
+                print('CLOSEST TO OUTLIER',closest_house[0], closest_house[1])
+                print('SWITCH', switch_house[0], '\nOLD',switch_house[1],'\nNEW' ,switch_house[2])
+                print('Dit zou moeten werken')
+                break
+
+            else:
+                tried_switches.append([closest_house[1], switch_house[1], switch_house[2]])
+                break
+
+            print('__________________________________________________')
+
+
+
+    return

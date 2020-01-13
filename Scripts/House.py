@@ -4,6 +4,7 @@ class House():
         self.output = output
         self.isconnected = False
         self.batteryconnected = None
+        self.path = []
 
     def calc_distances(self, batteries):
         self.distances = {}

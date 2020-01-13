@@ -2,9 +2,7 @@
 
 Outliers iteratief 
 
-battery verschillende volgordes 120 mogelijkheden
-
-battery volgorde random, scores opslaan van valide uitkomsten (top wijk 1 = 683) (top wijk 2 = 555) (top wijk 3 = 608)
+battery volgorde random, scores opslaan van valide uitkomsten (top wijk 1 = 672) (top wijk 2 = 555) (top wijk 3 = 606)
 
 clustering vanuit huizen (longest shortest distance of shortest)
 

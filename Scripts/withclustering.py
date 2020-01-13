@@ -17,7 +17,7 @@ batterieslist = loadbattery(batterypath)
 scores = []
 highest_score = 1000
 highest = []
-for attempt in range(50000):
+for attempt in range(1000):
     # load houses object in a list
     houses = []
     for house in houseslist:
@@ -128,7 +128,7 @@ for attempt in range(50000):
     # calculate number of cables
     all_cables = get_all_cables(result)
 
-    print(f'With dubble cables, loop {attempt}. Number of cables: ', len(all_cables), '. Total cost: ', 9 * len(all_cables))
+    print(f'With dubble cables, loop {attempt}. Number of cables: {len(all_cables)}. Total cost: {9 * len(all_cables)}')
     #gridplotter(result, batterypath, housespath)
     scores.append(len(all_cables))
 

@@ -6,10 +6,12 @@ import pprint as pp
 from helpers import get_all_cables, get_houses_left, averagex_andy, get_outliers, switchoutliers
 from grid import gridplotter
 import random
+import json
 
 # set paths to data files
-housespath = '../Data/wijk3_huizen.csv'
-batterypath = '../Data/wijk3_batterijen.csv'
+highscore_file = '../Data/wijk2_score.txt'
+housespath = '../Data/wijk2_huizen.csv'
+batterypath = '../Data/wijk2_batterijen.csv'
 
 # load in data
 houseslist = loadhouse(housespath)
@@ -121,7 +123,7 @@ while highest_score > 606:
     if len(houses_left) > 0:
         continue
 
-    outliers = get_outliers(batteries)
+    #outliers = get_outliers(batteries)
     #switchoutliers(outliers, houses, batteries)
 
     # get results in json format
@@ -135,11 +137,18 @@ while highest_score > 606:
     scores.append(len(all_cables))
 
     if len(all_cables) < highest_score:
-        print(f'With double cables, loop {attempt}. Number of cables: ', len(all_cables), '. Total cost: ', 9 * len(all_cables))
+        print(f'With double cables, loop {attempt}. Number of cables: {len(all_cables)}. Total cost: {9 * len(all_cables)}')
         highest_score = len(all_cables)
         highest = result
     if int(attempt % 10000) == 0:
         print(attempt)
 
 print(sorted(scores))
+outliers = get_outliers(batteries)
+
+for house in outliers:
+    print(house)
+
 gridplotter(highest, batterypath, housespath)
+with open('highscore_file', 'w') as outfile:
+    json.dump(result, outfile)

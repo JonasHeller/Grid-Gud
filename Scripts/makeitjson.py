@@ -30,13 +30,14 @@ def makejson(batteries):
             start = get_closest_cable(all_cables, house.coord)
             if start == (110, 110):
                 start = battery.coord
-
+            path = findpath(start, house.coord, first)
+            house.path = path
             # make dict for the house
             batterydict['huizen'].append({
                 'locatie' : house.coord,
                 'output' : house.output,
                 # create the path to the house from the battery
-                'kabels' : findpath(start, house.coord, first)
+                'kabels' : path
             })
         jsonlist.append(batterydict)
 

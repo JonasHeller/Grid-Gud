@@ -21,7 +21,7 @@ while True:
     # store the batteries in a dictionary with coords as key and class as value
     batterydict = {}
     for battery in batterijennew:
-        batterydict[(battery[0], battery[1])] = Battery((battery[0], battery[1]), battery[2])
+        batterydict[(battery[0], battery[1])] = Battery((battery[0], battery[1]), battery[2], 1)
 
     # store houses in a dictionary with coords as key an class as value
     housesdict = {}

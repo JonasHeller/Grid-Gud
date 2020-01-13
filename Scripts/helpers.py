@@ -112,13 +112,13 @@ def averagex_andy(battery):
 # get closest cable to an endpoint
 def get_closest_cable(cables, endpoint):
     closest = (110, 110)
-    distance_to_closest = abs(closest[0] - endpoint[0]) +abs(closest[1] - endpoint[1])
+    distance_to_closest = manhatten_distance(closest, endpoint)
 
     # loop over cables
     for cable in cables:
 
         # get manhatten distance to the endpoint
-        distance = abs(cable[0] - endpoint[0]) +abs(cable[1] - endpoint[1])
+        distance = manhatten_distance(cable, endpoint)
 
         # if the distance is lower, update closest
         if distance < distance_to_closest:
@@ -132,8 +132,13 @@ def get_outliers(batteries):
     outliers = []
     for index in batteries:
         battery = batteries[index]
+        total_distance = 0
         for house in battery.connected_houses:
-            if house.distances[index] > 50:
+            total_distance += house.distances[house.batteryconnected]
+        average_distance = total_distance / len(battery.connected_houses)
+        
+        for house in battery.connected_houses:
+            if manhatten_distance(house.coord, battery.coord) > average_distance * 2 and len(house.path) > 10:
                 outliers.append(house)
     return outliers
 
@@ -152,7 +157,7 @@ def switchoutliers(outliers, houses, batteries):
             outlier = item[1]
             # get house closest to outier
             for house in houses:
-                distance = abs(outlier.coord[0] - house.coord[0]) +abs(outlier.coord[1] - house.coord[1])
+                distance = manhatten_distance(outlier.coord, house.coord)
                 if distance < closest_house[0] and outlier.batteryconnected != house.batteryconnected:
                     closest_house[0] = distance
                     closest_house[1] = house
@@ -163,7 +168,7 @@ def switchoutliers(outliers, houses, batteries):
                 if old in outliers:
                     continue
                 for new in batteries[closest_house[1].batteryconnected].connected_houses:
-                    distance = abs(new.coord[0] - old.coord[0]) +abs(new.coord[1] - old.coord[1])
+                    distance = manhatten_distance(new.coord, old.coord)
                     if distance < switch_house[0]:
                         switch_house[0] = distance
                         switch_house[1] = old
@@ -193,3 +198,6 @@ def switchoutliers(outliers, houses, batteries):
 
 
     return
+
+def manhatten_distance(start, end):
+    return abs(start[0] - end[0]) + abs(start[1] - end[1])

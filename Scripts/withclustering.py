@@ -8,8 +8,8 @@ from grid import gridplotter
 import random
 
 # set paths to data files
-housespath = '../Data/wijk2_huizen.csv'
-batterypath = '../Data/wijk2_batterijen.csv'
+housespath = '../Data/wijk3_huizen.csv'
+batterypath = '../Data/wijk3_batterijen.csv'
 
 # load in data
 houseslist = loadhouse(housespath)
@@ -18,7 +18,7 @@ scores = []
 highest_score = 1000
 highest = []
 attempt = 0
-while highest_score > 554:
+while highest_score > 606:
     attempt += 1
     # load houses object in a list
     houses = []
@@ -135,7 +135,7 @@ while highest_score > 554:
     scores.append(len(all_cables))
 
     if len(all_cables) < highest_score:
-        print(f'With dubble cables, loop {attempt}. Number of cables: ', len(all_cables), '. Total cost: ', 9 * len(all_cables))
+        print(f'With double cables, loop {attempt}. Number of cables: ', len(all_cables), '. Total cost: ', 9 * len(all_cables))
         highest_score = len(all_cables)
         highest = result
     if int(attempt % 10000) == 0:

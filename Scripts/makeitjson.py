@@ -1,4 +1,4 @@
-from helpers import findpath, averagex_andy, get_closest_cable
+from helpers import findpath, averagex_andy, get_closest_cable, check_further
 
 # output the results in json format
 def makejson(batteries):
@@ -19,17 +19,21 @@ def makejson(batteries):
         first = averagex_andy(battery)
         # loop over connected houses
         for house in battery.connected_houses:
-
+            
             # get all aready laid cables
             all_cables = []
             for houses in batterydict['huizen']:
                 all_cables += houses['kabels']
 
-            # check if which cable is closest to the house
+            # check which cable is closest to the house
             start = get_closest_cable(all_cables, house.coord)
             if start == (110, 110):
                 start = battery.coord
-            path = findpath(start, house.coord, first)
+            other = check_further(start, house.coord, battery.connected_houses, first)
+            if other != first:
+                path = findpath(start, house.coord, other)
+            else:
+                path = findpath(start, house.coord, first)
             house.path = path
 
             # make dict for the house

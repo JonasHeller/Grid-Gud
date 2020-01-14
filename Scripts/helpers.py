@@ -1,3 +1,5 @@
+import random
+
 # get all laid cables
 def get_all_cables(result):
     all_cables = []
@@ -129,75 +131,102 @@ def get_closest_cable(cables, endpoint):
     return closest
 
 def get_outliers(batteries):
-    outliers = []
     for index in batteries:
         battery = batteries[index]
-        total_distance = 0
+        distances = []
         for house in battery.connected_houses:
-            total_distance += house.distances[house.batteryconnected]
-        average_distance = total_distance / len(battery.connected_houses)
-        
-        for house in battery.connected_houses:
-            if manhatten_distance(house.coord, battery.coord) > average_distance * 2 and len(house.path) > 10:
-                outliers.append(house)
-    return outliers
+            distances.append(house.distances[house.batteryconnected])
+        average_distance = sum(distances) / len(distances)
+        print(average_distance, max(distances))
+    return 
 
 def switchoutliers(outliers, houses, batteries):
-    outliers_distance = []
-    for outlier in outliers:
-        outliers_distance.append([outlier.distances[outlier.batteryconnected], outlier])
-
-    outliers_distance.sort(key=lambda tup: tup[0], reverse=True)
-    
-    for item in outliers_distance:
-        print(outlier)
-        tried_switches = []
-        while True:
-            closest_house = [100, 1]
-            outlier = item[1]
-            # get house closest to outier
-            for house in houses:
-                distance = manhatten_distance(outlier.coord, house.coord)
-                if distance < closest_house[0] and outlier.batteryconnected != house.batteryconnected:
-                    closest_house[0] = distance
-                    closest_house[1] = house
-
-            # get house to switch with
-            switch_house = [100, 1, 2]
-            for old in batteries[outlier.batteryconnected].connected_houses:
-                if old in outliers:
-                    continue
-                for new in batteries[closest_house[1].batteryconnected].connected_houses:
-                    distance = manhatten_distance(new.coord, old.coord)
-                    if distance < switch_house[0]:
-                        switch_house[0] = distance
-                        switch_house[1] = old
-                        switch_house[2] = new
-
-            # try the switch
-            outlier_battery = batteries[outlier.batteryconnected]
-            switch_battery = batteries[closest_house[1].batteryconnected]
-            if switch_battery.currentload + (outlier.output - switch_house[2].output) < switch_battery.capacity and \
-                outlier_battery.currentload + (switch_house[2].output - outlier.output) < outlier_battery.capacity:
-                outlier_battery.remove_house(outlier)
-                switch_battery.add_house(outlier)
-                outlier_battery.add_house(switch_house[2])
-                switch_battery.remove_house(switch_house[2])
-                print("CURRENT OUTLIER", outlier)
-                print('CLOSEST TO OUTLIER',closest_house[0], closest_house[1])
-                print('SWITCH', switch_house[0], '\nOLD',switch_house[1],'\nNEW' ,switch_house[2])
-                print('Dit zou moeten werken')
-                break
-
-            else:
-                tried_switches.append([closest_house[1], switch_house[1], switch_house[2]])
-                break
-
-            print('__________________________________________________')
-
-
 
     return
 
 def manhatten_distance(start, end):
     return abs(start[0] - end[0]) + abs(start[1] - end[1])
+
+def connect_houses(batteries, houses):
+        # let batteries choose its closest house in turn
+    # i = 0
+    skipcheck = 0
+    while skipcheck != len(batteries):
+
+        # set current to current batteries object
+        current = batteries[random.choice(list(batteries.keys()))]
+
+        # get closest house to current
+        house = current.get_closest_house()
+        if house != None:
+            if manhatten_distance(house.coord, current.coord) > 35:
+                skipcheck += 1
+
+            else: 
+            # try to add it to the house
+                try:
+                    if current.capacity_check(house):
+                        current.add_house(house)
+                        skipcheck = 0
+                    else:
+                        skipcheck += 1
+                except:
+                    skipcheck = 5
+        else:
+            skipcheck = 5
+
+        # update the index for next battery
+        # i += 1
+        # if i == 5:
+        #     i = 0
+
+    # get all houses not assigned
+    houses_left = get_houses_left(houses)
+
+    # loop for all houses in houses left
+    for house in houses_left:
+
+        # loop for batteries
+        for battery in batteries:
+            current = batteries[battery]
+
+            # check if house can still be added to battery
+            if current.capacity_check(house):
+                house.isconnected = True
+                current.add_house(house)
+
+    # update houses left
+    houses_left = get_houses_left(houses)
+
+    # if houses left is not empty, check if some houses can be shuffled to add last house
+    if len(houses_left) != 0:
+
+        # loop over all batteries
+        for battery in batteries:
+
+            # calculate the capacity needed
+            most_capacity = batteries[battery]
+            cap_needed = houses_left[0].output - (most_capacity.capacity - most_capacity.currentload)
+
+            # get house with lowest output that, if removed, will allow the house left to be added
+            lowest = [100, 1]
+            for house in most_capacity.connected_houses:
+                if house.output > cap_needed and house.output < lowest[0]:
+                    lowest = [house.output, house]
+
+            # check if the house selected above can fit in an other battery
+            try:
+                for battery in batteries:
+                    # if it fits, add it to the battery, remove it from the current battery
+                    # and add the house left to the current battery
+                    if batteries[battery].capacity_check(lowest[1]) and batteries[battery] != most_capacity:
+                        batteries[battery].add_house(lowest[1])
+                        most_capacity.remove_house(lowest[1])
+                        most_capacity.add_house(houses_left[0])
+                        break
+            except:
+                break
+
+    # update houses left
+    houses_left = get_houses_left(houses)
+    return batteries, houses, houses_left

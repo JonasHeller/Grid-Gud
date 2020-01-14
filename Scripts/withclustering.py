@@ -73,8 +73,11 @@ while highest_score > 570:
 
 print(sorted(scores))
 
-gridplotter(highest, batterypath, housespath)
+gridplotter(highest)
 
+with open(highscore_file) as json_file:
+    data = json.load(json_file)
 
-with open(highscore_file, 'w') as outfile:
-    json.dump(result, outfile)
+if len(get_all_cables(data)) > len(get_all_cables(highest)):
+    with open(highscore_file, 'w') as outfile:
+        json.dump(result, outfile)

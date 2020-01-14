@@ -159,7 +159,7 @@ def connect_houses(batteries, houses):
         # get closest house to current
         house = current.get_closest_house()
         if house != None:
-            if manhatten_distance(house.coord, current.coord) > 100:
+            if manhatten_distance(house.coord, current.coord) > 50:
                 skipcheck += 1
 
             else: 
@@ -174,11 +174,6 @@ def connect_houses(batteries, houses):
                     skipcheck = 5
         else:
             skipcheck = 5
-
-        # update the index for next battery
-        # i += 1
-        # if i == 5:
-        #     i = 0
 
     # get all houses not assigned
     houses_left = get_houses_left(houses)
@@ -240,9 +235,15 @@ def check_further(connected_cable, house, houses, default):
         else:
             if house.coord[0] == connected_cable[0] and abs(house.coord[1] - connected_cable[1]) < 10:
                 return "V"
-            
+             
+def update_battery_location(batteries):
+    for i in batteries:
+        avg_x = 0
+        avg_y = 0
+        battery = batteries[i]
+        for house in battery.connected_houses:
+            avg_x += house.coord[0]
+            avg_y += house.coord[1]
+        battery.coord = (round(avg_x / len(battery.connected_houses)), round(avg_y/ len(battery.connected_houses)))
 
-
-        
-    
-    
+    return batteries

@@ -1,28 +1,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-from loadfiles import loadbattery, loadhouse
 
 # Makes a grid for the different neighborhoods
-def gridplotter(jsonpaths, batterypath, housespath):
-    houses = loadhouse(housespath)
-    batterijen = loadbattery(batterypath)
-
-    # Stores the x and y coordinates of the Batteries
-    batteryX = []
-    batteryY = []
-    for battery in batterijen:
-        batteryX.append(int(battery[0]))
-        batteryY.append(int(battery[1]))
-
-    # Stores the x and y coordinates of the Houses
-    housesX = []
-    housesY = []
-    for house in houses:
-        temp = house.replace(' ', '').split(',')
-        temp = [float(i) for i in temp]
-
-        housesX.append(int(temp[0]))
-        housesY.append(int(temp[1]))
+def gridplotter(jsonpaths):
 
     # Plot the grid
     plt.axis([-1, 51, -1, 51])
@@ -35,9 +15,14 @@ def gridplotter(jsonpaths, batterypath, housespath):
     plt.minorticks_on()
     plt.grid(b=True, which='minor', color='#666666', linestyle='-', alpha=0.1)
 
-    # Plot the Houses and Batteries
-    plt.plot(housesX, housesY, '^g', label="Houses")
-    plt.plot(batteryX, batteryY, 'Hr', label="Batteries")
+    # Plots the Batteries in the grid
+    for battery in jsonpaths:
+        plt.plot(battery['locatie'][0], battery['locatie'][1], 'Hr', label='Batteries')
+
+    # Plots the Houses in the grid
+    for battery in jsonpaths:
+        for house in battery['huizen']:
+            plt.plot(house['locatie'][0], house['locatie'][1], '^g', label='Houses')
 
     colors = ['b', 'c', 'm', 'y', 'k']
 

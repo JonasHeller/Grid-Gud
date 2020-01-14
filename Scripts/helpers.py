@@ -42,7 +42,7 @@ def findpath(start, end, first):
         # if start x is bigger than end x, use -= 1
         if start[0] > end[0]:
 
-            # while endpoitn x is not yet reached, update current x
+            # while endpoint x is not yet reached, update current x
             while i != end[0]:
                 path.append((i, start[1]))
                 i -= 1
@@ -159,7 +159,7 @@ def connect_houses(batteries, houses):
         # get closest house to current
         house = current.get_closest_house()
         if house != None:
-            if manhatten_distance(house.coord, current.coord) > 35:
+            if manhatten_distance(house.coord, current.coord) > 100:
                 skipcheck += 1
 
             else: 
@@ -230,3 +230,19 @@ def connect_houses(batteries, houses):
     # update houses left
     houses_left = get_houses_left(houses)
     return batteries, houses, houses_left
+
+def check_further(connected_cable, house, houses, default):
+    for house in houses:
+        if default == "V":
+            if house.coord[1] == connected_cable[1] and abs(house.coord[0] - connected_cable[0]) < 10:
+                return "H"
+            
+        else:
+            if house.coord[0] == connected_cable[0] and abs(house.coord[1] - connected_cable[1]) < 10:
+                return "V"
+            
+
+
+        
+    
+    

@@ -21,7 +21,7 @@ highest_score = 1000
 highest = []
 attempt = 0
 
-while highest_score > 600:
+while highest_score > 570:
     attempt += 1
     # load houses object in a list
     houses = []
@@ -64,7 +64,7 @@ while highest_score > 600:
     scores.append(len(all_cables))
 
     if len(all_cables) < highest_score:
-        get_outliers(batteries)
+        #get_outliers(batteries)
         print(f'With double cables, loop {attempt}. Number of cables: {len(all_cables)}. Total cost: {9 * len(all_cables)}')
         highest_score = len(all_cables)
         highest = result

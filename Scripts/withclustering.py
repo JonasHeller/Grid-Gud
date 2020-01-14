@@ -21,7 +21,7 @@ highest_score = 1000
 highest = []
 attempt = 0
 
-while highest_score > 570:
+while highest_score > 560:
     attempt += 1
     # load houses object in a list
     houses = []

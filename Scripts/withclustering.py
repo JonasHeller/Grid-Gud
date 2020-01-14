@@ -3,7 +3,7 @@ from Battery import Battery
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp
-from helpers import get_all_cables, get_houses_left, averagex_andy, get_outliers, switchoutliers
+from helpers import get_all_cables, get_houses_left, averagex_andy, get_outliers, switchoutliers, manhatten_distance, connect_houses
 from grid import gridplotter
 import random
 import json
@@ -20,7 +20,8 @@ scores = []
 highest_score = 1000
 highest = []
 attempt = 0
-while highest_score > 606:
+
+while highest_score > 600:
     attempt += 1
     # load houses object in a list
     houses = []
@@ -45,81 +46,7 @@ while highest_score > 606:
     for battery in batteries:
         batteries[battery].calculate_distances(houses)
 
-    # let batteries choose its closest house in turn
-    # i = 0
-    skipcheck = 0
-    while skipcheck != len(batteries):
-
-        # set current to current batteries object
-        current = batteries[random.choice(list(batteries.keys()))]
-
-        # get closest house to current
-        house = current.get_closest_house()
-
-        # try to add it to the house
-        try:
-            if current.capacity_check(house):
-                current.add_house(house)
-                skipcheck = 0
-            else:
-                skipcheck += 1
-        except:
-            skipcheck = 5
-
-        # update the index for next battery
-        # i += 1
-        # if i == 5:
-        #     i = 0
-
-    # get all houses not assigned
-    houses_left = get_houses_left(houses)
-
-    # loop for all houses in houses left
-    for house in houses_left:
-
-        # loop for batteries
-        for battery in batteries:
-            current = batteries[battery]
-
-            # check if house can still be added to battery
-            if current.capacity_check(house):
-                house.isconnected = True
-                current.add_house(house)
-
-    # update houses left
-    houses_left = get_houses_left(houses)
-
-    # if houses left is not empty, check if some houses can be shuffled to add last house
-    if len(houses_left) != 0:
-
-        # loop over all batteries
-        for battery in batteries:
-
-            # calculate the capacity needed
-            most_capacity = batteries[battery]
-            cap_needed = houses_left[0].output - (most_capacity.capacity - most_capacity.currentload)
-
-            # get house with lowest output that, if removed, will allow the house left to be added
-            lowest = [100, 1]
-            for house in most_capacity.connected_houses:
-                if house.output > cap_needed and house.output < lowest[0]:
-                    lowest = [house.output, house]
-
-            # check if the house selected above can fit in an other battery
-            try:
-                for battery in batteries:
-                    # if it fits, add it to the battery, remove it from the current battery
-                    # and add the house left to the current battery
-                    if batteries[battery].capacity_check(lowest[1]) and batteries[battery] != most_capacity:
-                        batteries[battery].add_house(lowest[1])
-                        most_capacity.remove_house(lowest[1])
-                        most_capacity.add_house(houses_left[0])
-                        break
-            except:
-                break
-
-    # update houses left
-    houses_left = get_houses_left(houses)
+    batteries, houses, houses_left = connect_houses(batteries, houses)
     if len(houses_left) > 0:
         continue
 
@@ -137,6 +64,7 @@ while highest_score > 606:
     scores.append(len(all_cables))
 
     if len(all_cables) < highest_score:
+        get_outliers(batteries)
         print(f'With double cables, loop {attempt}. Number of cables: {len(all_cables)}. Total cost: {9 * len(all_cables)}')
         highest_score = len(all_cables)
         highest = result
@@ -144,11 +72,9 @@ while highest_score > 606:
         print(attempt)
 
 print(sorted(scores))
-outliers = get_outliers(batteries)
-
-for house in outliers:
-    print(house)
 
 gridplotter(highest, batterypath, housespath)
-with open('highscore_file', 'w') as outfile:
+
+
+with open(highscore_file, 'w') as outfile:
     json.dump(result, outfile)

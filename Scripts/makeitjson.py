@@ -17,7 +17,6 @@ def makejson(batteries):
 
         # check if horizontal or vertical needs to be done first
         first = averagex_andy(battery)
-
         # loop over connected houses
         for house in battery.connected_houses:
 
@@ -32,6 +31,7 @@ def makejson(batteries):
                 start = battery.coord
             path = findpath(start, house.coord, first)
             house.path = path
+
             # make dict for the house
             batterydict['huizen'].append({
                 'locatie' : house.coord,

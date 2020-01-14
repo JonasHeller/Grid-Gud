@@ -51,7 +51,7 @@ highest_score = 1000
 highest = []
 attempt = 0
 
-for i in range(1000):
+while highest_score > 610:
     
     batteries, houses = innit_data(houseslist, batterieslist, True, {})
 
@@ -70,6 +70,7 @@ for i in range(1000):
     if len(all_cables) < highest_score:
         highest_score = len(all_cables)
         highest = result
+        print(len(all_cables))
 
 print(highest_score)
 
@@ -102,9 +103,10 @@ for i in range(100):
             highest = result
 
     all_cables = get_all_cables(highest)
-    if len(all_cables) < highest_score_overall:
+    if len(all_cables) < highest_score_overall and len(all_cables) != 0:
         highest_score_overall = len(all_cables)
         highest_overall = highest
+        print(f'NEW HIGHEST SCORE: {len(all_cables)}')
     print(f'{len(get_all_cables(highest))} for attempt {i}')
 
 
@@ -118,6 +120,12 @@ print(len(all_cables))
     
 for i in range(len(result)):
     print(result[i]['locatie'])
+
+gridplotter(result)
+
+with open(highscore_file, 'w') as outfile:
+    json.dump(result, outfile)
+
 
 
 

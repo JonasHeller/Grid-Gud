@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 # Makes a grid for the different neighborhoods
-def gridplotter(jsonpaths, batterypath, housespath):
+def gridplotter(jsonpaths):
 
     # Plot the grid
     plt.axis([-1, 51, -1, 51])

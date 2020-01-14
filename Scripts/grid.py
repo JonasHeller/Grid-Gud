@@ -16,13 +16,22 @@ def gridplotter(jsonpaths):
     plt.grid(b=True, which='minor', color='#666666', linestyle='-', alpha=0.1)
 
     # Plots the Batteries in the grid
-    for battery in jsonpaths:
-        plt.plot(battery['locatie'][0], battery['locatie'][1], 'Hr', label='Batteries')
+    for i in range(len(jsonpaths)):
+        battery = jsonpaths[i]
+        if i == 0:
+            plt.plot(battery['locatie'][0], battery['locatie'][1], 'Hr', label="Batteries")
+        else:
+            plt.plot(battery['locatie'][0], battery['locatie'][1], 'Hr')
 
     # Plots the Houses in the grid
+    i = 0
     for battery in jsonpaths:
         for house in battery['huizen']:
-            plt.plot(house['locatie'][0], house['locatie'][1], '^g', label='Houses')
+            if i == 0:
+                plt.plot(house['locatie'][0], house['locatie'][1], '^g', label="Houses")
+            else:
+                plt.plot(house['locatie'][0], house['locatie'][1], '^g')
+            i += 1
 
     colors = ['b', 'c', 'm', 'y', 'k']
 

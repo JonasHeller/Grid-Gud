@@ -1,4 +1,6 @@
 import random
+from House import House
+from Battery import Battery
 
 # get all laid cables
 def get_all_cables(result):
@@ -140,10 +142,6 @@ def get_outliers(batteries):
         print(average_distance, max(distances))
     return 
 
-def switchoutliers(outliers, houses, batteries):
-
-    return
-
 def manhatten_distance(start, end):
     return abs(start[0] - end[0]) + abs(start[1] - end[1])
 
@@ -159,7 +157,7 @@ def connect_houses(batteries, houses):
         # get closest house to current
         house = current.get_closest_house()
         if house != None:
-            if manhatten_distance(house.coord, current.coord) > 75:
+            if manhatten_distance(house.coord, current.coord) > 150:
                 skipcheck += 1
 
             else: 
@@ -229,11 +227,11 @@ def connect_houses(batteries, houses):
 def check_further(connected_cable, house, houses, default):
     for house in houses:
         if default == "V":
-            if house.coord[1] == connected_cable[1] and abs(house.coord[0] - connected_cable[0]) < 15:
+            if house.coord[1] == connected_cable[1] and abs(house.coord[0] - connected_cable[0]) <= 15:
                 return "H"
             
         else:
-            if house.coord[0] == connected_cable[0] and abs(house.coord[1] - connected_cable[1]) < 15:
+            if house.coord[0] == connected_cable[0] and abs(house.coord[1] - connected_cable[1]) <= 15:
                 return "V"
              
 def update_battery_location(batteries):
@@ -247,3 +245,55 @@ def update_battery_location(batteries):
         battery.coord = (round(avg_x / len(battery.connected_houses)), round(avg_y/ len(battery.connected_houses)))
 
     return batteries
+
+def safe(batteries):
+    temp = batteries
+    return temp
+
+def innit_data(houseslist, batterieslist, rand, batteries):
+    houses = []
+    for house in houseslist:
+
+        # clean up data
+        temp = house.replace(' ', '').split(',')
+        temp = [float(i) for i in temp]
+        houses.append(House((temp[0], temp[1]), temp[2]))
+
+    if rand == False:
+        coords = [batteries[i].coord for i in batteries]
+
+    batteries = {}
+    for i in range(len(batterieslist)):
+        cap = batterieslist[i][2]
+
+        # place the batteries random
+        if rand == True:
+            battery_locations = []
+            house_locations = [house.coord for house in houses]
+            coord = (random.randint(0,50), random.randint(0,50))
+
+            # try to get a battery placing where there is no house or other battery
+            while coord in (house_locations + battery_locations):
+
+                # make sure the battery is more than 15 places away form any ohter battery
+                while True:
+                    coord = (random.randint(0,50), random.randint(0,50))
+                    for location in battery_locations:
+                        if manhatten_distance(coord, location) < 15:
+                            continue
+                    break
+
+            battery_locations.append(coord)
+        else:
+            coord = coords[i]
+        batteries[i] = (Battery(coord, cap, i))
+
+    # calculate distances to all batteries form houses
+    for house in houses:
+        house.calc_distances(batteries)
+
+    # calculate all distances to houses from batteries
+    for battery in batteries:
+        batteries[battery].calculate_distances(houses)
+
+    return batteries, houses

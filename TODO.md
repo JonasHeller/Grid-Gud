@@ -10,5 +10,6 @@ overcapaciteit toelaten en bij outliers fixen
 
 overbodige bochten weghalen
 
-Battarijen op willekeurige plekken (top wijk 1 = 520) (top wijk 2 = 533) (top wijk 3 = 564)
+Mid point clustering v1 (top wijk 1 = 520) (top wijk 2 = 533) (top wijk 3 = 536)
 
+huizen toekennen, batterijen verplaatsen (zonder huizen opniew toekennen). Wanneer batterijen niet meer verplaatsen, een goede huis toekenning vinden (n=10000), met die huizen toekennning weer opnieuw de batterijen verplaatsen. Deze cycle 100 keer doen ofzo

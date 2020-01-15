@@ -1,43 +1,11 @@
-from House import House
-from Battery import Battery
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp
-from helpers import get_all_cables, get_houses_left, averagex_andy, get_outliers, switchoutliers, manhatten_distance, connect_houses,\
-    update_battery_location    
+from helpers import get_all_cables, get_houses_left, averagex_andy, get_outliers, manhatten_distance, connect_houses,\
+    update_battery_location, safe, innit_data
 from grid import gridplotter
 import random
 import json
-
-def innit_data(houseslist, batterieslist, rand, batteries):
-    houses = []
-    for house in houseslist:
-
-        # clean up data
-        temp = house.replace(' ', '').split(',')
-        temp = [float(i) for i in temp]
-        houses.append(House((temp[0], temp[1]), temp[2]))
-
-    if rand == False:
-        coords = [batteries[i].coord for i in batteries]
-    batteries = {}
-    for i in range(len(batterieslist)):
-        cap = batterieslist[i][2]
-        if rand == True:
-            coord = (random.randint(0,50), random.randint(0,50))
-        else:
-            coord = coords[i]
-        batteries[i] = (Battery(coord, cap, i))
-
-    # calculate distances to all batteries form houses
-    for house in houses:
-        house.calc_distances(batteries)
-
-    # calculate all distances to houses from batteries
-    for battery in batteries:
-        batteries[battery].calculate_distances(houses)
-
-    return batteries, houses
 
 
 highscore_file = '../Data/wijk3_score_advanced1.txt'
@@ -84,30 +52,53 @@ for i in batteries:
 
 highest_score_overall = 1000
 highest_overall = []
+previous_coord = []
+
+# update battery location 100 times
 for i in range(100):
+
+    # safe previous coordinates
+    previous_coord = [batteries[i].coord for i in batteries]
+
+    # update battery location to middle of its cluster
     batteries = update_battery_location(batteries)
     highest_score = 1000
     highest = []
+
+    # try to get a high score
     for j in range(1000):
+
+        # clean batteries and houses for next loop
         batteries, houses = innit_data(houseslist, batterieslist, False, batteries)
 
+        # make connections
         batteries, houses, houses_left = connect_houses(batteries, houses)
+
+        # if there are houses left, try again
         if len(houses_left) > 0:
             continue
-        
+            
+        # make result and get all cables
         result = makejson(batteries)
         all_cables = get_all_cables(result)
 
+        # update highest score for current battery location
         if len(all_cables) < highest_score:
             highest_score = len(all_cables)
             highest = result
-
+            
+    highest = makejson(batteries)
+    # get score for highest of the battery location
     all_cables = get_all_cables(highest)
+
+    # update highest scores overall
     if len(all_cables) < highest_score_overall and len(all_cables) != 0:
         highest_score_overall = len(all_cables)
         highest_overall = highest
         print(f'NEW HIGHEST SCORE: {len(all_cables)}')
-    print(f'{len(get_all_cables(highest))} for attempt {i}')
+
+    print(f'{len(get_all_cables(highest))} for attempt {i}. Starting with {len(get_all_cables(makejson(batteries)))}')
+
 
 
 # get results in json format
@@ -123,8 +114,12 @@ for i in range(len(result)):
 
 gridplotter(result)
 
-with open(highscore_file, 'w') as outfile:
-    json.dump(result, outfile)
+with open(highscore_file) as json_file:
+    data = json.load(json_file)
+
+if len(get_all_cables(data)) > len(get_all_cables(highest)):
+    with open(highscore_file, 'w') as outfile:
+        json.dump(result, outfile)
 
 
 

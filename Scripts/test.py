@@ -2,7 +2,7 @@ from grid import gridplotter
 import json
 
 def pathing_test():
-    with open('../Data/wijk3_score_advanced1.txt') as json_file:
+    with open('../Scores/wijk3_score_advanced1.txt') as json_file:
         data = json.load(json_file)
     gridplotter(data)
 

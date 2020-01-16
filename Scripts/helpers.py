@@ -310,3 +310,27 @@ def save_highscore(path, result):
     except:
         with open(path, 'w') as outfile:
             json.dump(result, outfile)
+
+
+def connect_houses_from_houses(batteries, houses):
+    skipcheck = 0
+    while True:
+        shortest = 100
+        shortest_battery = None
+        house = random.choice(houses)
+        for i in batteries:
+            if house.distances[i] < shortest and batteries[i].capacity_check(house) == True:
+                shortest = house.distances[i]
+                shortest_battery = i
+
+        if shortest_battery != None:
+            batteries[shortest_battery].add_house(house)
+            houses.remove(house)
+            skipcheck = 0
+        else:
+            skipcheck += 1
+
+        if skipcheck == len(houses) or len(houses) == 0:
+            break
+
+    return batteries, houses

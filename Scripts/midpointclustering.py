@@ -2,7 +2,7 @@ from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp
 from helpers import get_all_cables, get_houses_left, averagex_andy, get_outliers, manhatten_distance, connect_houses,\
-    update_battery_location, safe, innit_data
+    update_battery_location, innit_data, save_highscore
 from grid import gridplotter
 import random
 import json
@@ -114,13 +114,7 @@ for i in range(len(result)):
 
 gridplotter(result)
 
-with open(highscore_file) as json_file:
-    data = json.load(json_file)
-
-if len(get_all_cables(data)) > len(get_all_cables(highest)):
-    with open(highscore_file, 'w') as outfile:
-        json.dump(result, outfile)
-
+save_highscore(highscore_file, result)
 
 
 

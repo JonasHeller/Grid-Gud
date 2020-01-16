@@ -2,7 +2,7 @@ from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp
 from helpers import get_all_cables, get_houses_left, averagex_andy, get_outliers, manhatten_distance, connect_houses,\
-    update_battery_location, innit_data
+    update_battery_location, innit_data, save_highscore
 from grid import gridplotter
 import random
 import json
@@ -33,12 +33,11 @@ for i in range(10):
 
         result = makejson(batteries)
         score = len(get_all_cables(result))
-        print(score)
         if score < highest_score:
             highest_score = score
             highest = result
             best = copy.deepcopy(batteries)
-            print('NEW HIGHEST SCORE: ', highest_score)
+            print('NEW HIGHEST SCORE: ', highest_score, j)
     
     if highest_score < overall_highest_score:
         overall_highest_score = highest_score
@@ -51,3 +50,4 @@ for i in range(10):
 print(overall_highest_score)
 gridplotter(overall_highest)
 
+save_highscore(highscore_file, overall_highest)

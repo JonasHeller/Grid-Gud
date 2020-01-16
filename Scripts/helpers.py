@@ -1,5 +1,6 @@
 import random
 from House import House
+import json
 from Battery import Battery
 
 # get all laid cables
@@ -297,3 +298,15 @@ def innit_data(houseslist, batterieslist, rand, batteries):
         batteries[battery].calculate_distances(houses)
 
     return batteries, houses
+
+def save_highscore(path, result):
+    try:
+        with open(path) as json_file:
+            data = json.load(json_file)
+
+        if len(get_all_cables(data)) > len(get_all_cables(result)):
+            with open(path, 'w') as outfile:
+                json.dump(result, outfile)
+    except:
+        with open(path, 'w') as outfile:
+            json.dump(result, outfile)

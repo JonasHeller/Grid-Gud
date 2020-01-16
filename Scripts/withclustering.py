@@ -3,7 +3,7 @@ from Battery import Battery
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp
-from helpers import get_all_cables, get_houses_left, averagex_andy, get_outliers, switchoutliers, manhatten_distance, connect_houses
+from helpers import get_all_cables, get_houses_left, averagex_andy, get_outliers, manhatten_distance, connect_houses
 from grid import gridplotter
 import random
 import json
@@ -48,7 +48,9 @@ while highest_score > 560:
 
     batteries, houses, houses_left = connect_houses(batteries, houses)
     if len(houses_left) > 0:
+        print(len(houses_left))
         continue
+    
 
     #outliers = get_outliers(batteries)
     #switchoutliers(outliers, houses, batteries)

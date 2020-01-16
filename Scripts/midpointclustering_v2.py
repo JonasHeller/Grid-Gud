@@ -7,7 +7,7 @@ from grid import gridplotter
 import random
 import json
 
-highscore_file = '../Data/wijk2_score_advanced1.txt'
+highscore_file = '../Scores/wijk2_score_advanced2.txt'
 housespath = '../Data/wijk2_huizen.csv'
 batterypath = '../Data/wijk2_batterijen.csv'
 

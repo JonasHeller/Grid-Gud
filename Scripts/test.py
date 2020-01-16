@@ -11,4 +11,4 @@ def test_modulo():
         print(j % 1000)
         if j % 1000 == 0:
             print('HET WERKT')
-    
+pathing_test()

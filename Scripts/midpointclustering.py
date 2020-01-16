@@ -8,7 +8,7 @@ import random
 import json
 
 
-highscore_file = '../Data/wijk3_score_advanced1.txt'
+highscore_file = '../Scores/wijk3_score_advanced1.txt'
 housespath = '../Data/wijk3_huizen.csv'
 batterypath = '../Data/wijk3_batterijen.csv'
 

@@ -12,4 +12,4 @@ overbodige bochten weghalen
 
 Mid point clustering v1 (top wijk 1 = 520) (top wijk 2 = 533) (top wijk 3 = 536)
 
-huizen toekennen, batterijen verplaatsen (zonder huizen opniew toekennen). Wanneer batterijen niet meer verplaatsen, een goede huis toekenning vinden (n=10000), met die huizen toekennning weer opnieuw de batterijen verplaatsen. Deze cycle 100 keer doen ofzo
+zet batterijen random neer. Vind een goede connectie. Breken het midden van het cluster en verplaats de batterijen. Check of met de zelfde connecties de score verbeterd. Zo ja, hou de nieuwe locaties, zo nee ga terug naar de oude locaties en vind een betere connectie.

@@ -22,7 +22,7 @@ highest_score = 1000
 highest = []
 attempt = 0
 
-for i in range(100000):
+for i in range(10000):
     attempt += 1
     # load houses object in a list
     houses = []
@@ -48,7 +48,7 @@ for i in range(100000):
         batteries[battery].calculate_distances(houses)
 
     #batteries, houses, houses_left = connect_houses(batteries, houses)
-    batteries, houses_left = connect_houses_from_houses(batteries, houses)
+    batteries, houses, houses_left = connect_houses(batteries, houses)
     if len(houses_left) > 0:
         continue
 

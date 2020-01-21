@@ -52,7 +52,26 @@ class Battery():
                 # this makes the loops shorter on every iteration
                 self.distances.remove(house)
             else:
-                return house[1]
-    
+                closest_to_battery = house[1]
+                closest_distance = house[0]
+                break
+        
+        not_connected_houses = [house[1] for house in self.distances if house[1].isconnected == False]
+
+        try:
+            for house in self.connected_houses:
+                for not_connected_house in not_connected_houses:
+                    distance = self.manhatten_distance(house.coord, not_connected_house.coord)
+                    if distance < closest_distance:
+                        closest_distance = distance
+                        closest_to_battery = not_connected_house
+            return closest_to_battery
+        except:
+            return None
+
+
+    def manhatten_distance(self, start, end):
+        return abs(start[0] - end[0]) + abs(start[1] - end[1])
+
     def __str__(self):
         return str(self.coord) + ', ' + str(self.capacity) + ', ' + str(self.currentload) + ', ' + str(len(self.connected_houses))

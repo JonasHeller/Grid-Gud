@@ -39,4 +39,4 @@ def calc_average(path):
 
     print(average/150, average)
 
-calc_average('../Data/wijk2_huizen.csv')
+calc_average('../Data/wijk3_huizen.csv')

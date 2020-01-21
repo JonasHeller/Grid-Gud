@@ -2,6 +2,7 @@ import random
 from House import House
 import json
 from Battery import Battery
+import plotly.graph_objects as go
 
 # get all laid cables
 def get_all_cables(result):
@@ -334,3 +335,12 @@ def connect_houses_from_houses(batteries, houses):
             break
 
     return batteries, houses
+
+
+def scores_plot(scores):
+    amount_scores = []
+    for score in set(sorted(scores)):
+        amount_scores.append(scores.count(score))
+    fig = go.Figure([go.Bar(x=list(set(sorted(scores))), y=amount_scores , marker_color=list(set(sorted(scores))))])
+    fig.show()
+    return 

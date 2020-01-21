@@ -10,9 +10,9 @@ import random
 import json
 
 # set paths to data files
-highscore_file = '../Data/wijk2_score.txt'
-housespath = '../Data/wijk2_huizen.csv'
-batterypath = '../Data/wijk2_batterijen.csv'
+highscore_file = '../Data/wijk1_score.txt'
+housespath = '../Data/wijk1_huizen.csv'
+batterypath = '../Data/wijk1_batterijen.csv'
 
 # load in data
 houseslist = loadhouse(housespath)
@@ -76,4 +76,4 @@ gridplotter(highest)
 
 save_highscore(highscore_file, highest)
 
-#scores_plot(scores)
+scores_plot(scores)

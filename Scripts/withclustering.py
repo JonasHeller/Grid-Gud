@@ -3,7 +3,8 @@ from Battery import Battery
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp
-from helpers import get_all_cables, get_houses_left, averagex_andy, get_outliers, manhatten_distance, connect_houses
+from helpers import get_all_cables, get_houses_left, averagex_andy, get_outliers, manhatten_distance, connect_houses, \
+    connect_houses_from_houses, save_highscore, scores_plot
 from grid import gridplotter
 import random
 import json
@@ -21,7 +22,7 @@ highest_score = 1000
 highest = []
 attempt = 0
 
-while highest_score > 560:
+for i in range(10000):
     attempt += 1
     # load houses object in a list
     houses = []
@@ -46,13 +47,17 @@ while highest_score > 560:
     for battery in batteries:
         batteries[battery].calculate_distances(houses)
 
+    #batteries, houses, houses_left = connect_houses(batteries, houses)
     batteries, houses, houses_left = connect_houses(batteries, houses)
     if len(houses_left) > 0:
         continue
+<<<<<<< HEAD
 
 
     #outliers = get_outliers(batteries)
     #switchoutliers(outliers, houses, batteries)
+=======
+>>>>>>> a62eafd184c991adb9c764529788ce78e27de135
 
     # get results in json format
     result = makejson(batteries)
@@ -76,9 +81,6 @@ print(sorted(scores))
 
 gridplotter(highest)
 
-with open(highscore_file) as json_file:
-    data = json.load(json_file)
+save_highscore(highscore_file, highest)
 
-if len(get_all_cables(data)) > len(get_all_cables(highest)):
-    with open(highscore_file, 'w') as outfile:
-        json.dump(result, outfile)
+scores_plot(scores)

@@ -22,7 +22,7 @@ highest_score = 1000
 highest = []
 attempt = 0
 
-for i in range(10000):
+for i in range(1000):
     attempt += 1
     # load houses object in a list
     houses = []
@@ -51,13 +51,6 @@ for i in range(10000):
     batteries, houses, houses_left = connect_houses(batteries, houses)
     if len(houses_left) > 0:
         continue
-<<<<<<< HEAD
-
-
-    #outliers = get_outliers(batteries)
-    #switchoutliers(outliers, houses, batteries)
-=======
->>>>>>> a62eafd184c991adb9c764529788ce78e27de135
 
     # get results in json format
     result = makejson(batteries)
@@ -83,4 +76,4 @@ gridplotter(highest)
 
 save_highscore(highscore_file, highest)
 
-scores_plot(scores)
+#scores_plot(scores)

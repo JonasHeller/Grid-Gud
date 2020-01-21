@@ -8,9 +8,9 @@ import random
 import json
 
 
-highscore_file = '../Scores/wijk3_score_advanced1.txt'
-housespath = '../Data/wijk3_huizen.csv'
-batterypath = '../Data/wijk3_batterijen.csv'
+highscore_file = '../Scores/wijk2_score_advanced1.txt'
+housespath = '../Data/wijk2_huizen.csv'
+batterypath = '../Data/wijk2_batterijen.csv'
 
 houseslist = loadhouse(housespath)
 batterieslist = loadbattery(batterypath)
@@ -55,7 +55,7 @@ highest_overall = []
 previous_coord = []
 
 # update battery location 100 times
-for i in range(100):
+for i in range(10):
 
     # safe previous coordinates
     previous_coord = [batteries[i].coord for i in batteries]

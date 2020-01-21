@@ -8,9 +8,9 @@ import random
 import json
 
 
-highscore_file = '../Scores/wijk3_score_advanced1.txt'
-housespath = '../Data/wijk3_huizen.csv'
-batterypath = '../Data/wijk3_batterijen.csv'
+highscore_file = '../Scores/wijk1_score_advanced1.txt'
+housespath = '../Data/wijk1_huizen.csv'
+batterypath = '../Data/wijk1_batterijen.csv'
 
 houseslist = loadhouse(housespath)
 batterieslist = loadbattery(batterypath)
@@ -20,7 +20,7 @@ highest = []
 attempt = 0
 
 while highest_score > 610:
-    
+
     batteries, houses = innit_data(houseslist, batterieslist, True, {})
 
     batteries, houses, houses_left = connect_houses(batteries, houses)
@@ -55,7 +55,7 @@ highest_overall = []
 previous_coord = []
 
 # update battery location 100 times
-for i in range(100):
+for i in range(10):
 
     # safe previous coordinates
     previous_coord = [batteries[i].coord for i in batteries]
@@ -77,7 +77,7 @@ for i in range(100):
         # if there are houses left, try again
         if len(houses_left) > 0:
             continue
-            
+
         # make result and get all cables
         result = makejson(batteries)
         all_cables = get_all_cables(result)
@@ -86,7 +86,7 @@ for i in range(100):
         if len(all_cables) < highest_score:
             highest_score = len(all_cables)
             highest = result
-            
+
     highest = makejson(batteries)
     # get score for highest of the battery location
     all_cables = get_all_cables(highest)
@@ -108,17 +108,10 @@ result = highest_overall
 all_cables = get_all_cables(result)
 
 print(len(all_cables))
-    
+
 for i in range(len(result)):
     print(result[i]['locatie'])
 
 gridplotter(result)
 
 save_highscore(highscore_file, result)
-
-
-
-
-
-
-

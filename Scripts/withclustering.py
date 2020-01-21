@@ -10,9 +10,9 @@ import random
 import json
 
 # set paths to data files
-highscore_file = '../Data/wijk2_score.txt'
-housespath = '../Data/wijk2_huizen.csv'
-batterypath = '../Data/wijk2_batterijen.csv'
+highscore_file = '../Data/wijk1_score.txt'
+housespath = '../Data/wijk1_huizen.csv'
+batterypath = '../Data/wijk1_batterijen.csv'
 
 # load in data
 houseslist = loadhouse(housespath)
@@ -51,13 +51,6 @@ for i in range(10000):
     batteries, houses, houses_left = connect_houses(batteries, houses)
     if len(houses_left) > 0:
         continue
-<<<<<<< HEAD
-
-
-    #outliers = get_outliers(batteries)
-    #switchoutliers(outliers, houses, batteries)
-=======
->>>>>>> a62eafd184c991adb9c764529788ce78e27de135
 
     # get results in json format
     result = makejson(batteries)

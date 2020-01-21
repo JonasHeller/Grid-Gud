@@ -1,5 +1,7 @@
 ## Things to do
 
+Random uitkomsten (top wijk 1 = 2008) (top wijk 2 = 1757) (top wijk 3 = 1952)
+
 Outliers iteratief
 
 battery volgorde random, scores opslaan van valide uitkomsten (top wijk 1 = 665) (top wijk 2 = 554) (top wijk 3 = 582)

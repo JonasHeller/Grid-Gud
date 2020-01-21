@@ -48,9 +48,8 @@ while highest_score > 560:
 
     batteries, houses, houses_left = connect_houses(batteries, houses)
     if len(houses_left) > 0:
-        print(len(houses_left))
         continue
-    
+
 
     #outliers = get_outliers(batteries)
     #switchoutliers(outliers, houses, batteries)
@@ -61,7 +60,7 @@ while highest_score > 560:
     # calculate number of cables
     all_cables = get_all_cables(result)
 
-    
+
     #gridplotter(result, batterypath, housespath)
     scores.append(len(all_cables))
 

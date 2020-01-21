@@ -8,15 +8,17 @@ from helpers import get_all_cables
 from grid import gridplotter
 
 # set path to the datafiles
-housespath = '../Data/wijk2_huizen.csv'
-batterypath = '../Data/wijk2_batterijen.csv'
+housespath = '../Data/wijk3_huizen.csv'
+batterypath = '../Data/wijk3_batterijen.csv'
 
 # load in data
 houses = loadhouse(housespath)
 batterijennew = loadbattery(batterypath)
 
-# loop until a random solution has been found
-while True:
+lowpoint = 10000
+
+for i in range(10000):
+    print(i)
 
     # store the batteries in a dictionary with coords as key and class as value
     batterydict = {}
@@ -61,10 +63,10 @@ while True:
                 for houseleft in housesdict:
                     if batterydict[battery].capacity_check(housesdict[houseleft]):
 
-                        # add houses 
+                        # add houses
                         batterydict[battery].add_house(housesdict[houseleft])
                         deletelist.append(houseleft)
-                
+
                 # remove added houses from houses dict and break out of the loop
                 for item in deletelist:
                     del housesdict[item]
@@ -100,20 +102,24 @@ while True:
                         batterydict[battery].add_house(lowest[1])
                         most_capacity.remove_house(lowest[1])
                         most_capacity.add_house(house_left)
-                        break
+                        pass
             except:
-                break
+                pass
+
+    result = makejson(batterydict)
+    all_cables = len(get_all_cables(result))
+
 
     # if all houses are assigned, stop the loop
-    if len(list(housesdict.keys())) == 0:
-        break
+    if len(list(housesdict.keys())) == 0 and all_cables < lowpoint:
+        lowpoint = all_cables
+        result = makejson(batterydict)
+        print(f" Lowest is {lowpoint}")
 
 # get the results in json format
-result = makejson(batterydict)
 
 # make the plot
-gridplotter(result, batterypath, housespath)
+gridplotter(result)
 
 # get the prices
-all_cables = get_all_cables(result)
-print(f"amount of cables: {len(all_cables)} and the costs: {9 * len(all_cables)}")
+print(f"amount of cables: {lowpoint} and the costs: {9 * lowpoint}")

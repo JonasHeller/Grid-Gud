@@ -19,13 +19,13 @@ def makejson(batteries):
         first = averagex_andy(battery)
         # loop over connected houses
         for house in battery.connected_houses:
-            
-            # get all aready laid cables
+
+            get all aready laid cables
             all_cables = []
             for houses in batterydict['huizen']:
                 all_cables += houses['kabels']
 
-            # check which cable is closest to the house
+            check which cable is closest to the house
             start = get_closest_cable(all_cables, house.coord)
             if start == (110, 110):
                 start = battery.coord
@@ -46,4 +46,3 @@ def makejson(batteries):
         jsonlist.append(batterydict)
 
     return jsonlist
-

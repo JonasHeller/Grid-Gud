@@ -228,6 +228,8 @@ def connect_houses(batteries, houses):
     houses_left = get_houses_left(houses)
     return batteries, houses, houses_left
 
+# Check wheter there is a house further away that is not connected yet
+# This elimantes snaking cables
 def check_further(connected_cable, house, houses, default):
     for house in houses:
         if default == "V":
@@ -342,7 +344,7 @@ def connect_houses_from_houses(batteries, houses):
 
     return batteries, houses
 
-
+# Create a bargraph with all scores
 def scores_plot(scores):
     amount_scores = []
     for score in set(sorted(scores)):

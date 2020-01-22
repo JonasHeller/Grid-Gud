@@ -8,9 +8,9 @@ import random
 import json
 
 
-highscore_file = '../Scores/wijk1_score_advanced1.txt'
-housespath = '../Data/wijk1_huizen.csv'
-batterypath = '../Data/wijk1_batterijen.csv'
+highscore_file = '../Scores/wijk2_score_advanced1.txt'
+housespath = '../Data/wijk2_huizen.csv'
+batterypath = '../Data/wijk2_batterijen.csv'
 
 houseslist = loadhouse(housespath)
 batterieslist = loadbattery(batterypath)

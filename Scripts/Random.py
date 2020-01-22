@@ -37,7 +37,7 @@ for i in range(10000):
     # loop over all batteries
     for battery in batterydict:
 
-        # loop until the capcity of the battery is reached
+        # loop until the capacity of the battery is reached
         while True:
 
             # try to get a random choice
@@ -48,11 +48,11 @@ for i in range(10000):
             except:
                 break
 
-            # check if the battery as enough capacity left and add the house
+            # check if the battery has enough capacity left and add the house
             if batterydict[battery].capacity_check(housesdict[temp]):
                 batterydict[battery].add_house(housesdict[temp])
 
-                # remove house from availible houses
+                # remove house from available houses
                 del housesdict[temp]
 
             # else check if one last house can be added
@@ -73,7 +73,7 @@ for i in range(10000):
                 break
 
     # sometimes the houses don't fit in the batteries
-    # this tries to shuffle some around
+    # The next for loop tries to shuffle some around
 
     # get a house that is left
     for item in housesdict:
@@ -110,13 +110,11 @@ for i in range(10000):
     all_cables = len(get_all_cables(result))
 
 
-    # if all houses are assigned, stop the loop
+    # if all houses are assigned, reasign the lowest amount of cables
     if len(list(housesdict.keys())) == 0 and all_cables < lowpoint:
         lowpoint = all_cables
         result = makejson(batterydict)
         print(f" Lowest is {lowpoint}")
-
-# get the results in json format
 
 # make the plot
 gridplotter(result)

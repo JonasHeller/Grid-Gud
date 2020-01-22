@@ -225,8 +225,7 @@ def connect_houses(batteries, houses):
     houses_left = get_houses_left(houses)
     return batteries, houses, houses_left
 
-
-# Check wheter there is a house further away that is not connected yet
+# Check if there is a house on the same X or Y that is closeby, if so change the direction to start the cable
 # This elimantes snaking cables
 def check_further(connected_cable, house, houses, default):
     for house in houses:
@@ -356,8 +355,11 @@ def connect_houses_from_houses(batteries, houses):
 # Create a bargraph with all scores
 def scores_plot(scores):
     amount_scores = []
+    # Count how many times a score was found
     for score in set(sorted(scores)):
         amount_scores.append(scores.count(score))
+    
+    # Plot all scores with a colour gradient
     fig = go.Figure([go.Bar(x=list(set(sorted(scores))), y=amount_scores , marker_color=list(set(sorted(scores))))])
     fig.show()
     return

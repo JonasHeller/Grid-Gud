@@ -29,14 +29,18 @@ def makejson(batteries):
             start = get_closest_cable(all_cables, house.coord)
             if start == (110, 110):
                 start = battery.coord
+            
+            # Check if there is a house on the same line close to this one
             other = check_further(start, house.coord, battery.connected_houses, first)
+            
+            # If so, first move horizontal or vertical depending on the found house
             if other != first:
                 path = findpath(start, house.coord, other)
             else:
                 path = findpath(start, house.coord, first)
             house.path = path
 
-            # make dict for the house
+            # make a dict for the house
             batterydict['huizen'].append({
                 'locatie' : house.coord,
                 'output' : house.output,

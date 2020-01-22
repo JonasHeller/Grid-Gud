@@ -5,9 +5,9 @@ from helpers import innit_data, update_battery_location, connect_houses, get_all
 from grid import gridplotter
 import pprint as pp
 
-highscore_file = '../Data/wijk1_score_buy_batteries.txt'
-housespath = '../Data/wijk1_huizen.csv'
-batterypath = '../Data/wijk1_batterijen.csv'
+highscore_file = '../Data/wijk3_score_buy_batteries.txt'
+housespath = '../Data/wijk3_huizen.csv'
+batterypath = '../Data/wijk3_batterijen.csv'
 
 # load houses
 houseslist = loadhouse(housespath)

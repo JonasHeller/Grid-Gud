@@ -10,9 +10,9 @@ import random
 import json
 
 # set paths to data files
-highscore_file = '../Data/wijk3_score.txt'
-housespath = '../Data/wijk3_huizen.csv'
-batterypath = '../Data/wijk3_batterijen.csv'
+highscore_file = '../Data/wijk1_score.txt'
+housespath = '../Data/wijk1_huizen.csv'
+batterypath = '../Data/wijk1_batterijen.csv'
 
 # load in data
 houseslist = loadhouse(housespath)

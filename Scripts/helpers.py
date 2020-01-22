@@ -138,25 +138,14 @@ def get_closest_cable(cables, endpoint):
     # return closest
     return closest
 
-
-def get_outliers(batteries):
-    for index in batteries:
-        battery = batteries[index]
-        distances = []
-        for house in battery.connected_houses:
-            distances.append(house.distances[house.batteryconnected])
-        average_distance = sum(distances) / len(distances)
-        print(average_distance, max(distances))
-    return
-
-
+# calculate manhatten distance
 def manhatten_distance(start, end):
     return abs(start[0] - end[0]) + abs(start[1] - end[1])
 
-
+# connect batteries to houses, where batteries can choose
 def connect_houses(batteries, houses):
+
     # let batteries choose its closest house in turn
-    # i = 0
     skipcheck = 0
     while skipcheck != len(batteries):
 
@@ -235,8 +224,7 @@ def connect_houses(batteries, houses):
     houses_left = get_houses_left(houses)
     return batteries, houses, houses_left
 
-
-# Check wheter there is a house further away that is not connected yet
+# Check if there is a house on the same X or Y that is closeby, if so change the direction to start the cable
 # This elimantes snaking cables
 def check_further(connected_cable, house, houses, default):
     for house in houses:
@@ -248,25 +236,29 @@ def check_further(connected_cable, house, houses, default):
             if house.coord[0] == connected_cable[0] and abs(house.coord[1] - connected_cable[1]) <= 15:
                 return "V"
 
-
+# updates battery locations to the average location of its houses
 def update_battery_location(batteries):
     for i in batteries:
         avg_x = 0
         avg_y = 0
         battery = batteries[i]
+
+        # loop over the houses 
         for house in battery.connected_houses:
             avg_x += house.coord[0]
             avg_y += house.coord[1]
+
+        # set new battery location
         battery.coord = (round(avg_x / len(battery.connected_houses)), round(avg_y/ len(battery.connected_houses)))
 
     return batteries
 
-
+# create a copy of batteries
 def safe(batteries):
     temp = batteries
     return temp
 
-
+# initializes data
 def innit_data(houseslist, batterieslist, rand, batteries):
     houses = []
     for house in houseslist:
@@ -276,6 +268,7 @@ def innit_data(houseslist, batterieslist, rand, batteries):
         temp = [float(i) for i in temp]
         houses.append(House((temp[0], temp[1]), temp[2]))
 
+    # save battery coords it they do not need to be random
     if rand == False:
         coords = [batteries[i].coord for i in batteries]
 
@@ -296,6 +289,8 @@ def innit_data(houseslist, batterieslist, rand, batteries):
                 skip = -1
                 while skip < len(battery_locations):
                     skip = 0
+
+                    # get random coord
                     coord = (random.randint(0,50), random.randint(0,50))
                     for location in battery_locations:
                         if manhatten_distance(coord, location) < 10:
@@ -305,6 +300,7 @@ def innit_data(houseslist, batterieslist, rand, batteries):
 
             battery_locations.append(coord)
 
+        # use coords previously saved
         else:
             coord = coords[i]
         batteries[i] = (Battery(coord, cap, i))
@@ -319,20 +315,25 @@ def innit_data(houseslist, batterieslist, rand, batteries):
 
     return batteries, houses
 
-
+# saves highscore to a file, if it is a highscore
 def save_highscore(path, result):
     try:
+
+        # open old highscore
         with open(path) as json_file:
             data = json.load(json_file)
 
+        # update highscore if it is better
         if len(get_all_cables(data)) > len(get_all_cables(result)):
             with open(path, 'w') as outfile:
                 json.dump(result, outfile)
     except:
+
+        # if there is no old highscore, just write new highscore to file
         with open(path, 'w') as outfile:
             json.dump(result, outfile)
 
-
+# IS NOT USED (NOT BETTER THEN connect_houses())
 def connect_houses_from_houses(batteries, houses):
     skipcheck = 0
     while True:
@@ -360,8 +361,11 @@ def connect_houses_from_houses(batteries, houses):
 # Create a bargraph with all scores
 def scores_plot(scores):
     amount_scores = []
+    # Count how many times a score was found
     for score in set(sorted(scores)):
         amount_scores.append(scores.count(score))
+    
+    # Plot all scores with a colour gradient
     fig = go.Figure([go.Bar(x=list(set(sorted(scores))), y=amount_scores , marker_color=list(set(sorted(scores))))])
     fig.show()
     return

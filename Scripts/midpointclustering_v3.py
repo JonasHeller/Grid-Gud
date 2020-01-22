@@ -1,3 +1,5 @@
+# NOT USED FOR HIGH SCORES
+
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp

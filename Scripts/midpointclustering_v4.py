@@ -1,3 +1,5 @@
+# NOT USED FOR HIGH SCORES
+
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp
@@ -12,9 +14,11 @@ highscore_file = '../Scores/wijk3_score_advanced4.txt'
 housespath = '../Data/wijk3_huizen.csv'
 batterypath = '../Data/wijk3_batterijen.csv'
 
+# load houses and batteries 
 houseslist = loadhouse(housespath)
 batterieslist = loadbattery(batterypath)
 
+# initialize the data
 batteries, houses = innit_data(houseslist, batterieslist, True, {})
 
 highest = []

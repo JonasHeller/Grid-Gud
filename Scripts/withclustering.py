@@ -3,7 +3,7 @@ from Battery import Battery
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp
-from helpers import get_all_cables, get_houses_left, averagex_andy, get_outliers, manhatten_distance, connect_houses, \
+from helpers import get_all_cables, get_houses_left, averagex_andy, manhatten_distance, connect_houses, \
     connect_houses_from_houses, save_highscore, scores_plot
 from grid import gridplotter
 import random
@@ -63,7 +63,6 @@ for i in range(1000):
     scores.append(len(all_cables))
 
     if len(all_cables) < highest_score:
-        #get_outliers(batteries)
         print(f'With double cables, loop {attempt}. Number of cables: {len(all_cables)}. Total cost: {9 * len(all_cables)}')
         highest_score = len(all_cables)
         highest = result

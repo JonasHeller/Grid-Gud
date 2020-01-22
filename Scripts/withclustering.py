@@ -39,7 +39,7 @@ for i in range(1000):
         battery = batterieslist[i]
         batteries[i] = Battery((battery[0], battery[1]), battery[2], i)
 
-    # calculate distances to all batteries form houses
+    # calculate distances to all batteries from houses
     for house in houses:
         house.calc_distances(batteries)
 
@@ -47,7 +47,7 @@ for i in range(1000):
     for battery in batteries:
         batteries[battery].calculate_distances(houses)
 
-    #batteries, houses, houses_left = connect_houses(batteries, houses)
+    # batteries, houses, houses_left = connect_houses(batteries, houses)
     batteries, houses, houses_left = connect_houses(batteries, houses)
     if len(houses_left) > 0:
         continue

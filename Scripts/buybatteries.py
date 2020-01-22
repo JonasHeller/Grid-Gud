@@ -5,17 +5,17 @@ from helpers import innit_data, update_battery_location, connect_houses, get_all
 from grid import gridplotter
 import pprint as pp
 
-highscore_file = '../Data/wijk2_score_buy_batteries.txt'
-housespath = '../Data/wijk2_huizen.csv'
-batterypath = '../Data/wijk2_batterijen.csv'
+highscore_file = '../Data/wijk1_score_buy_batteries.txt'
+housespath = '../Data/wijk1_huizen.csv'
+batterypath = '../Data/wijk1_batterijen.csv'
 
 # load houses
 houseslist = loadhouse(housespath)
 
 # set battery options
 battery_options = [
-    {'price' : 900, 'capacity': 450}, 
-    {'price' : 1350, 'capacity': 900}, 
+    {'price' : 900, 'capacity': 450},
+    {'price' : 1350, 'capacity': 900},
     {'price' : 1800, 'capacity': 1800}
 ]
 
@@ -55,7 +55,7 @@ for i in range(10):
         # if there are houses left, try again
         if len(houses_left) > 0:
             continue
-            
+
         # make result and get all cables
         result = makejson(batteries)
         all_cables = get_all_cables(result)
@@ -69,10 +69,10 @@ for i in range(10):
             highest_price = price
     
 
-            
+
 # get results in json format
 print(f'Capacity: {highest_cap}, price: {highest_price}, battery combo: {highest_battery_combo}. Highest score for setup: {highest_score}')
-    
+
 for i in range(len(highest)):
     print(highest[i]['locatie'])
 

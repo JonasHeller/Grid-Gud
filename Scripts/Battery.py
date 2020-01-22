@@ -16,12 +16,12 @@ class Battery():
 
     def remove_house(self, house):
 
-        # remove house form connected houses list and flag house as disconnected
+        # remove house from connected houses list and flag house as disconnected
         self.connected_houses.remove(house)
         self.currentload -= house.output
         house.isconnected = False
         house.batteryconnected = None
-    
+
     def capacity_check(self, house):
 
         # check if house can be connected
@@ -33,7 +33,7 @@ class Battery():
     def calculate_distances(self, houses):
         self.distances = []
 
-        # looop over houses
+        # loop over houses
         for house in houses:
 
             # calculate manhattan distance to houses

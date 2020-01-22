@@ -15,11 +15,12 @@ def get_all_cables(result):
         batterycables = []
         for house in battery['huizen']:
 
-            # add cabels to the list
+            # add cables to the list
             batterycables += house['kabels']
         all_cables += set(batterycables)
 
     return all_cables
+
 
 # get all houses not connected
 def get_houses_left(houses):
@@ -32,6 +33,7 @@ def get_houses_left(houses):
         if house.isconnected == False:
             houses_left.append(house)
     return houses_left
+
 
 # find path from start to end
 def findpath(start, end, first):
@@ -46,11 +48,11 @@ def findpath(start, end, first):
         # if start x is bigger than end x, use -= 1
         if start[0] > end[0]:
 
-            # while endpoint x is not yet reached, update current x
+            # while endpoint x is not reached yet, update current x
             while i != end[0]:
                 path.append((i, start[1]))
                 i -= 1
-        
+
         # else use += 1
         else:
             while i != end[0]:
@@ -92,7 +94,8 @@ def findpath(start, end, first):
     path.append(end)
     return path
 
-# check if the algorithm needs to first do x values or y values
+
+# check if the algorithm needs to do x values or y values first
 def averagex_andy(battery):
     x = 0
     y = 0
@@ -105,7 +108,7 @@ def averagex_andy(battery):
         x += abs(house.coord[0] - coord[0])
         y += abs(house.coord[1] - coord[1])
 
-    # calculate average x,y disatances
+    # calculate average x,y distances
     avgx = x / len(battery.connected_houses)
     avgy = y / len(battery.connected_houses)
 
@@ -114,6 +117,7 @@ def averagex_andy(battery):
         return 'V'
     else:
         return 'H'
+
 
 # get closest cable to an endpoint
 def get_closest_cable(cables, endpoint):
@@ -130,7 +134,7 @@ def get_closest_cable(cables, endpoint):
         if distance < distance_to_closest:
             distance_to_closest = distance
             closest = cable
-    
+
     # return closest
     return closest
 
@@ -138,6 +142,7 @@ def manhatten_distance(start, end):
 
     # calculate manhatten distance
     return abs(start[0] - end[0]) + abs(start[1] - end[1])
+
 
 def connect_houses(batteries, houses):
 
@@ -155,7 +160,7 @@ def connect_houses(batteries, houses):
             if manhatten_distance(house.coord, current.coord) > 150:
                 skipcheck += 1
 
-            else: 
+            else:
             # try to add it to the house
                 try:
                     if current.capacity_check(house):
@@ -169,13 +174,13 @@ def connect_houses(batteries, houses):
         else:
             skipcheck = len(batteries)
 
-    # get all houses not assigned
+    # get all houses that are not assigned
     houses_left = get_houses_left(houses)
 
-    # loop for all houses in houses left
+    # loop over all houses in houses left
     for house in houses_left:
 
-        # loop for batteries
+        # loop over batteries
         for battery in batteries:
             current = batteries[battery]
 
@@ -220,6 +225,7 @@ def connect_houses(batteries, houses):
     houses_left = get_houses_left(houses)
     return batteries, houses, houses_left
 
+
 # Check wheter there is a house further away that is not connected yet
 # This elimantes snaking cables
 def check_further(connected_cable, house, houses, default):
@@ -227,11 +233,12 @@ def check_further(connected_cable, house, houses, default):
         if default == "V":
             if house.coord[1] == connected_cable[1] and abs(house.coord[0] - connected_cable[0]) <= 15:
                 return "H"
-            
+
         else:
             if house.coord[0] == connected_cable[0] and abs(house.coord[1] - connected_cable[1]) <= 15:
                 return "V"
-             
+
+
 def update_battery_location(batteries):
 
     # updates battery locations to the average location of its houses
@@ -250,9 +257,11 @@ def update_battery_location(batteries):
 
     return batteries
 
+
 def safe(batteries):
     temp = batteries
     return temp
+
 
 def innit_data(houseslist, batterieslist, rand, batteries):
     houses = []
@@ -279,7 +288,7 @@ def innit_data(houseslist, batterieslist, rand, batteries):
             # try to get a battery placing where there is no house or other battery
             while coord in (house_locations + battery_locations):
 
-                # make sure the battery is more than 15 places away form any ohter battery
+                # make sure the battery is more than 15 places away from any ohter battery
                 skip = -1
                 while skip < len(battery_locations):
                     skip = 0
@@ -296,7 +305,7 @@ def innit_data(houseslist, batterieslist, rand, batteries):
             coord = coords[i]
         batteries[i] = (Battery(coord, cap, i))
 
-    # calculate distances to all batteries form houses
+    # calculate distances to all batteries from houses
     for house in houses:
         house.calc_distances(batteries)
 
@@ -305,6 +314,7 @@ def innit_data(houseslist, batterieslist, rand, batteries):
         batteries[battery].calculate_distances(houses)
 
     return batteries, houses
+
 
 def save_highscore(path, result):
     try:
@@ -342,6 +352,7 @@ def connect_houses_from_houses(batteries, houses):
 
     return batteries, houses
 
+
 # Create a bargraph with all scores
 def scores_plot(scores):
     amount_scores = []
@@ -349,4 +360,4 @@ def scores_plot(scores):
         amount_scores.append(scores.count(score))
     fig = go.Figure([go.Bar(x=list(set(sorted(scores))), y=amount_scores , marker_color=list(set(sorted(scores))))])
     fig.show()
-    return 
+    return

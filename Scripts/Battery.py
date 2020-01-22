@@ -37,7 +37,7 @@ class Battery():
         for house in houses:
 
             # calculate manhattan distance to houses
-            self.distances.append((abs(self.coord[0] - house.coord[0]) + abs(self.coord[1] - house.coord[1]), house))
+            self.distances.append((self.manhatten_distance(self.coord, house.coord), house))
         
         # sort houses on distance
         self.distances.sort(key=lambda tup: tup[0])
@@ -56,21 +56,31 @@ class Battery():
                 closest_distance = house[0]
                 break
         
+        # get all not connected houses
         not_connected_houses = [house[1] for house in self.distances if house[1].isconnected == False]
 
+        # loop over already connected houses and not connected houses
         try:
             for house in self.connected_houses:
                 for not_connected_house in not_connected_houses:
+
+                    # calc manhatten distance
                     distance = self.manhatten_distance(house.coord, not_connected_house.coord)
+
+                    # update closest house if necessary
                     if distance < closest_distance:
                         closest_distance = distance
                         closest_to_battery = not_connected_house
+
+            # retrun closest house
             return closest_to_battery
         except:
             return None
 
 
     def manhatten_distance(self, start, end):
+
+        # calculate manhatten distance
         return abs(start[0] - end[0]) + abs(start[1] - end[1])
 
     def __str__(self):

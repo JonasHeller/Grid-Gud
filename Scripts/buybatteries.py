@@ -9,24 +9,30 @@ highscore_file = '../Data/wijk2_score_buy_batteries.txt'
 housespath = '../Data/wijk2_huizen.csv'
 batterypath = '../Data/wijk2_batterijen.csv'
 
+# load houses
 houseslist = loadhouse(housespath)
 
+# set battery options
 battery_options = [
     {'price' : 900, 'capacity': 450}, 
     {'price' : 1350, 'capacity': 900}, 
     {'price' : 1800, 'capacity': 1800}
 ]
 
+# set highest score variables
 highest_score = 1000
 highest_cap = 0
 highest_battery_combo = []
 highest_price = 0
 
+# try 10 battery locations
 for i in range(10):
+    
     total_cap = 0
     battery_combo = []
     price = 0
 
+    # choose batteries until enough capacity is reached
     while total_cap < 7500:
         battery = random.choice(battery_options)
         total_cap += battery['capacity']
@@ -39,7 +45,6 @@ for i in range(10):
 
     # try to get a high score
     for j in range(1000):
-        print(f'this is loop {j}')
 
         # clean batteries and houses for next loop
         batteries, houses = innit_data(houseslist, battery_combo, False, batteries)
@@ -62,6 +67,7 @@ for i in range(10):
             highest_battery_combo = battery_combo
             highest_cap = total_cap
             highest_price = price
+    
 
             
 # get results in json format

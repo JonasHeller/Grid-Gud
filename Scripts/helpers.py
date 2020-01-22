@@ -134,22 +134,14 @@ def get_closest_cable(cables, endpoint):
     # return closest
     return closest
 
-def get_outliers(batteries):
-    for index in batteries:
-        battery = batteries[index]
-        distances = []
-        for house in battery.connected_houses:
-            distances.append(house.distances[house.batteryconnected])
-        average_distance = sum(distances) / len(distances)
-        print(average_distance, max(distances))
-    return 
-
 def manhatten_distance(start, end):
+
+    # calculate manhatten distance
     return abs(start[0] - end[0]) + abs(start[1] - end[1])
 
 def connect_houses(batteries, houses):
-        # let batteries choose its closest house in turn
-    # i = 0
+
+    # let batteries choose its closest house in turn
     skipcheck = 0
     while skipcheck != len(batteries):
 
@@ -241,13 +233,19 @@ def check_further(connected_cable, house, houses, default):
                 return "V"
              
 def update_battery_location(batteries):
+
+    # updates battery locations to the average location of its houses
     for i in batteries:
         avg_x = 0
         avg_y = 0
         battery = batteries[i]
+
+        # loop over the houses 
         for house in battery.connected_houses:
             avg_x += house.coord[0]
             avg_y += house.coord[1]
+
+        # set new battery location
         battery.coord = (round(avg_x / len(battery.connected_houses)), round(avg_y/ len(battery.connected_houses)))
 
     return batteries

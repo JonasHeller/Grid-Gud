@@ -1,3 +1,5 @@
+# THIS IS THE BEST MIDPOINTCLUSTERING, USED FOR HIGHSCORES FOR FIRST ADVANCED TASK
+
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp
@@ -12,6 +14,7 @@ highscore_file = '../Scores/wijk2_score_advanced1.txt'
 housespath = '../Data/wijk2_huizen.csv'
 batterypath = '../Data/wijk2_batterijen.csv'
 
+# load data
 houseslist = loadhouse(housespath)
 batterieslist = loadbattery(batterypath)
 
@@ -19,6 +22,7 @@ highest_score = 1000
 highest = []
 attempt = 0
 
+# get a relativly good setup for batteries
 while highest_score > 610:
 
     batteries, houses = innit_data(houseslist, batterieslist, True, {})
@@ -42,12 +46,9 @@ while highest_score > 610:
 
 print(highest_score)
 
+# set best battery setup
 for i in range(len(highest)):
     batteries[i].coord = highest[i]['locatie']
-
-for i in batteries:
-    print(batteries[i].coord)
-
 
 
 highest_score_overall = 1000
@@ -107,8 +108,8 @@ result = highest_overall
 # calculate number of cables
 all_cables = get_all_cables(result)
 
-print(len(all_cables))
-    
+# show score and batteries
+print(len(all_cables))  
 for i in batteries:
     print(batteries[i])
 

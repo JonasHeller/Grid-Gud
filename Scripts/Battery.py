@@ -16,12 +16,12 @@ class Battery():
 
     def remove_house(self, house):
 
-        # remove house form connected houses list and flag house as disconnected
+        # remove house from connected houses list and flag house as disconnected
         self.connected_houses.remove(house)
         self.currentload -= house.output
         house.isconnected = False
         house.batteryconnected = None
-    
+
     def capacity_check(self, house):
 
         # check if house can be connected
@@ -33,12 +33,12 @@ class Battery():
     def calculate_distances(self, houses):
         self.distances = []
 
-        # looop over houses
+        # loop over houses
         for house in houses:
 
             # calculate manhattan distance to houses
             self.distances.append((abs(self.coord[0] - house.coord[0]) + abs(self.coord[1] - house.coord[1]), house))
-        
+
         # sort houses on distance
         self.distances.sort(key=lambda tup: tup[0])
 
@@ -55,7 +55,7 @@ class Battery():
                 closest_to_battery = house[1]
                 closest_distance = house[0]
                 break
-        
+
         not_connected_houses = [house[1] for house in self.distances if house[1].isconnected == False]
 
         try:

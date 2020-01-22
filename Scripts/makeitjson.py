@@ -19,6 +19,8 @@ def makejson(batteries):
         first = averagex_andy(battery)
         # loop over connected houses
         for house in battery.connected_houses:
+            
+            """For random.py see docstring below"""
 
             # get all aready laid cables
             all_cables = []
@@ -38,6 +40,10 @@ def makejson(batteries):
                 path = findpath(start, house.coord, other)
             else:
                 path = findpath(start, house.coord, first)
+
+            """comment above, un-comment below and vice-versa"""
+            # path= findpath(battery.coord, house.coord, first)
+
             house.path = path
 
             # make a dict for the house

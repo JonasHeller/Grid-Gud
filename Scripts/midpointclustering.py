@@ -2,7 +2,6 @@
 
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
-import pprint as pp
 from helpers import get_all_cables, get_houses_left, averagex_andy, manhatten_distance, connect_houses,\
     update_battery_location, innit_data, save_highscore
 from grid import gridplotter

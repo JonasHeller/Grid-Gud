@@ -3,7 +3,6 @@ from makeitjson import makejson
 import random
 from helpers import innit_data, update_battery_location, connect_houses, get_all_cables, save_highscore
 from grid import gridplotter
-import pprint as pp
 
 highscore_file = '../Data/wijk3_score_buy_batteries.txt'
 housespath = '../Data/wijk3_huizen.csv'

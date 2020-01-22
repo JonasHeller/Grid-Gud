@@ -16,37 +16,31 @@ battery_options = [
     {'price' : 1800, 'capacity': 1800}
 ]
 
-total_cap = 0
-battery_combo = []
-price = 0
 
-while total_cap < 7500:
-    battery = random.choice(battery_options)
-    total_cap += battery['capacity']
-    price += battery['price']
-    battery_combo.append([100, 100, battery['capacity']])
 
-batteries, houses = innit_data(houseslist, battery_combo, True, {})
+highest_score = 1000
+highest_cap = 0
+highest_battery_combo = []
+highest_price = 0
 
-for battery in batteries:
-    print(batteries[battery])
-print(price, total_cap)
+for i in range(10):
+    total_cap = 0
+    battery_combo = []
+    price = 0
 
-batteries, houses, houses_left = connect_houses(batteries, houses)
+    while total_cap < 7500:
+        battery = random.choice(battery_options)
+        total_cap += battery['capacity']
+        price += battery['price']
+        battery_combo.append([100, 100, battery['capacity']])
 
-# update battery location 100 times
-for i in range(100):
-    # safe previous coordinates
-    previous_coord = [batteries[i].coord for i in batteries]
+        batteries, houses = innit_data(houseslist, battery_combo, True, {})
 
-    # update battery location to middle of its cluster
-    batteries = update_battery_location(batteries)
-    highest_score = 1000
-    highest = []
+        batteries, houses, houses_left = connect_houses(batteries, houses)
 
     # try to get a high score
     for j in range(1000):
-        print(j)
+        print(f'this is loop {j}')
 
         # clean batteries and houses for next loop
         batteries, houses = innit_data(houseslist, battery_combo, False, batteries)
@@ -66,26 +60,16 @@ for i in range(100):
         if len(all_cables) < highest_score:
             highest_score = len(all_cables)
             highest = result
+            highest_battery_combo = battery_combo
+            highest_cap = total_cap
+            highest_price = price
+
+    print(f'Capacity: {total_cap}, price: {price}. Highest score for setup: {highest_score}')
             
-    highest = makejson(batteries)
-    # get score for highest of the battery location
-    all_cables = get_all_cables(highest)
-
-    # update highest scores overall
-    if len(all_cables) < highest_score_overall and len(all_cables) != 0:
-        highest_score_overall = len(all_cables)
-        highest_overall = highest
-        print(f'NEW HIGHEST SCORE: {len(all_cables)}')
-
-    print(f'{len(get_all_cables(highest))} for attempt {i}. Starting with {len(get_all_cables(makejson(batteries)))}')
-
 # get results in json format
-result = highest_overall
+result = highest
 
-# calculate number of cables
-all_cables = get_all_cables(result)
-
-print(len(all_cables))
+print(f'Capacity: {highest_cap}, price: {highest_price}, battery combo: {highest_battery_combo}. Highest score for setup: {highest_score}')
     
 for i in range(len(result)):
     print(result[i]['locatie'])

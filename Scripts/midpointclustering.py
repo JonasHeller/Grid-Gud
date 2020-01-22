@@ -55,7 +55,7 @@ highest_overall = []
 previous_coord = []
 
 # update battery location 100 times
-for i in range(100):
+for i in range(10):
 
     # safe previous coordinates
     previous_coord = [batteries[i].coord for i in batteries]
@@ -94,7 +94,7 @@ for i in range(100):
     # update highest scores overall
     if len(all_cables) < highest_score_overall and len(all_cables) != 0:
         highest_score_overall = len(all_cables)
-        highest_overall = highest
+        highest_overall = highest 
         print(f'NEW HIGHEST SCORE: {len(all_cables)}')
 
     print(f'{len(get_all_cables(highest))} for attempt {i}. Starting with {len(get_all_cables(makejson(batteries)))}')
@@ -109,8 +109,8 @@ all_cables = get_all_cables(result)
 
 print(len(all_cables))
     
-for i in range(len(result)):
-    print(result[i]['locatie'])
+for i in batteries:
+    print(batteries[i])
 
 gridplotter(result)
 

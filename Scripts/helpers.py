@@ -154,7 +154,8 @@ def connect_houses(batteries, houses):
     while skipcheck != len(batteries):
 
         # set current to current batteries object
-        current = batteries[random.choice(list(batteries.keys()))]
+        current_battery = random.choice(list(batteries.keys()))
+        current = batteries[current_battery]
 
         # get closest house to current
         house = current.get_closest_house()
@@ -171,9 +172,10 @@ def connect_houses(batteries, houses):
                     else:
                         skipcheck += 1
                 except:
-                    skipcheck = 5
+                    skipcheck = len(batteries)
+
         else:
-            skipcheck = 5
+            skipcheck = len(batteries)
 
     # get all houses not assigned
     houses_left = get_houses_left(houses)

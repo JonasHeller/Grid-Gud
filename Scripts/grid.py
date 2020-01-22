@@ -33,7 +33,11 @@ def gridplotter(jsonpaths):
                 plt.plot(house['locatie'][0], house['locatie'][1], '^g')
             i += 1
 
-    colors = ['b', 'c', 'm', 'y', 'k']
+    colors = [
+        'b', 'c', 'm', 'y', 'k', '#ff9900',
+        '#ff66cc', '#996633', '#66ff99', '#9999ff',
+        '#00ff00', '#ff9966', '#cccc00', '#009999', 
+        '#990000', '#cc33ff', '#808080']
 
     # Plot the paths from the houses to the batteries, each battery has its own color
     for j in range(len(jsonpaths)):

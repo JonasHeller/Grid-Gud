@@ -3,8 +3,9 @@ from makeitjson import makejson
 import random
 from helpers import innit_data, update_battery_location, connect_houses, get_all_cables, save_highscore
 from grid import gridplotter
+import pprint as pp
 
-highscore_file = '../Data/wijk2_score.txt'
+highscore_file = '../Data/wijk2_score_buy_batteries.txt'
 housespath = '../Data/wijk2_huizen.csv'
 batterypath = '../Data/wijk2_batterijen.csv'
 
@@ -15,8 +16,6 @@ battery_options = [
     {'price' : 1350, 'capacity': 900}, 
     {'price' : 1800, 'capacity': 1800}
 ]
-
-
 
 highest_score = 1000
 highest_cap = 0
@@ -64,16 +63,13 @@ for i in range(10):
             highest_cap = total_cap
             highest_price = price
 
-    print(f'Capacity: {total_cap}, price: {price}. Highest score for setup: {highest_score}')
             
 # get results in json format
-result = highest
-
 print(f'Capacity: {highest_cap}, price: {highest_price}, battery combo: {highest_battery_combo}. Highest score for setup: {highest_score}')
     
-for i in range(len(result)):
-    print(result[i]['locatie'])
+for i in range(len(highest)):
+    print(highest[i]['locatie'])
 
-gridplotter(result)
+gridplotter(highest)
 
-save_highscore(highscore_file, result)
+save_highscore(highscore_file, highest)

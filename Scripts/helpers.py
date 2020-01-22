@@ -280,14 +280,18 @@ def innit_data(houseslist, batterieslist, rand, batteries):
             while coord in (house_locations + battery_locations):
 
                 # make sure the battery is more than 15 places away form any ohter battery
-                while True:
+                skip = -1
+                while skip < len(battery_locations):
+                    skip = 0
                     coord = (random.randint(0,50), random.randint(0,50))
                     for location in battery_locations:
-                        if manhatten_distance(coord, location) < 15:
-                            continue
-                    break
+                        if manhatten_distance(coord, location) < 10:
+                            break
+                        else:
+                            skip += 1
 
             battery_locations.append(coord)
+
         else:
             coord = coords[i]
         batteries[i] = (Battery(coord, cap, i))

@@ -94,7 +94,7 @@ for i in range(10):
     # update highest scores overall
     if len(all_cables) < highest_score_overall and len(all_cables) != 0:
         highest_score_overall = len(all_cables)
-        highest_overall = highest
+        highest_overall = highest 
         print(f'NEW HIGHEST SCORE: {len(all_cables)}')
 
     print(f'{len(get_all_cables(highest))} for attempt {i}. Starting with {len(get_all_cables(makejson(batteries)))}')
@@ -108,9 +108,9 @@ result = highest_overall
 all_cables = get_all_cables(result)
 
 print(len(all_cables))
-
-for i in range(len(result)):
-    print(result[i]['locatie'])
+    
+for i in batteries:
+    print(batteries[i])
 
 gridplotter(result)
 

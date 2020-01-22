@@ -10,13 +10,10 @@ Advanced 2 (buybatteries): (top wijk 1 = kosten: 13932 , kabels: 498) (top wijk 
 
 Lowerbound van tussen de 400 en 420
 
-Comments schrijven
 
 presentatie maken
 
 ReadMe aanpassen
-
-Code opschonen
 
 Wat hebben we gedaan dat niet werkte etc.
 

@@ -3,7 +3,6 @@ from House import House
 from Battery import Battery
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
-import pprint as pp
 from helpers import get_all_cables, scores_plot, make_boxplot
 from grid import gridplotter
 

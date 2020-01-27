@@ -2,7 +2,7 @@
 
 Smart grid project part of the minor programming at the Universety of Amsterdam
 
-made by: Jonas Heller, Krolos Abdou, Justin Bon
+Made by: Jonas Heller, Krolos Abdou, Justin Bon
 
 
 ### Goal
@@ -43,25 +43,21 @@ The scripts folder includes all the different scripts we wrote.
 
 These files do the following:
 
-Battery and house include the needed classes 
+- Battery and house include the needed classes 
 
-Loadfiles load the desired files into the script
+- Loadfiles load the desired files into the script
 
-Makeitjson takes the result of a solution and formats it to Json
+- Makeitjson takes the result of a solution and formats it to Json
 
-Grid takes the Json and makes a visualisation
+- Grid takes the Json and makes a visualisation
 
-Random is an script that finds a random correct solution.
+- Random is an script that finds a random correct solution.
 
-Withclustering uses different heuristics to improve the algorithm to find a lowest possible score. 
+- Withclustering uses different heuristics to improve the algorithm to find a lowest possible score. 
 
-Midpointclustering uses different heuristics to find a solution. This includes changing the position of the batteries. (v2, v3, v4 are variations that are not used for our top scores.)
+- Midpointclustering uses different heuristics to find a solution. This includes changing the position of the batteries. (v2, v3, v4 are variations that are not used for our top scores.)
 
-buybatteries uses batteries of different costs and capacaties to find a solution 
-
-Bestscores load the best scores for each datasets and makes a visualisation 
-
-Test is just a generic file for testing some functionality
+- buybatteries uses batteries of different costs and capacaties to find a solution 
 
 The scores folder includes all our top scores in Json format. 
 

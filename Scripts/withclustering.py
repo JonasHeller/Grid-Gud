@@ -61,6 +61,7 @@ for i in range(1000):
     #gridplotter(result, batterypath, housespath)
     scores.append(len(all_cables))
 
+    # Remember hihest score
     if len(all_cables) < highest_score:
         print(f'With double cables, loop {attempt}. Number of cables: {len(all_cables)}. Total cost: {9 * len(all_cables)}')
         highest_score = len(all_cables)
@@ -68,10 +69,14 @@ for i in range(1000):
 
 print(sorted(scores))
 
+# Plot result
 gridplotter(highest)
 
+# Save highsest score
 save_highscore(highscore_file, highest)
 
+# Plot all scores
 scores_plot(scores)
 
+# Make boxplot of all scores
 make_boxplot(scores)

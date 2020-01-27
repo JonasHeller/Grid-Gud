@@ -1,5 +1,3 @@
-# THIS IS THE BEST MIDPOINTCLUSTERING, USED FOR HIGHSCORES FOR FIRST ADVANCED TASK
-
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 from helpers import get_all_cables, get_houses_left, averagex_andy, manhatten_distance, connect_houses,\
@@ -39,18 +37,16 @@ while highest_score > 610:
     # calculate number of cables
     all_cables = get_all_cables(result)
 
+    # Rememeber highest score
     if len(all_cables) < highest_score:
         highest_score = len(all_cables)
         highest = result
-        print(len(all_cables))
-
-print(highest_score)
 
 # set best battery setup
 for i in range(len(highest)):
     batteries[i].coord = highest[i]['locatie']
 
-
+# Initialize variables
 highest_score_overall = 1000
 highest_overall = []
 previous_coord = []
@@ -109,15 +105,17 @@ result = highest_overall
 # calculate number of cables
 all_cables = get_all_cables(result)
 
-# show score and batteries
+# show score
 print(len(all_cables))  
-for i in batteries:
-    print(batteries[i])
 
+# Visualize result
 gridplotter(result)
 
+# Save highest score
 save_highscore(highscore_file, result)
 
+# Plot all scores
 scores_plot(scores)
 
+# Make boxplot of all scores
 make_boxplot(scores)

@@ -75,13 +75,14 @@ for i in range(10):
 # get results in json format
 print(f'Capacity: {highest_cap}, price: {highest_price}, battery combo: {highest_battery_combo}. Highest score for setup: {highest_score}')
 
-for i in range(len(highest)):
-    print(highest[i]['locatie'])
-
+# Visualize the result
 gridplotter(highest)
 
+# save the new highscore
 save_highscore(highscore_file, highest)
 
+# plot all scores
 scores_plot(scores)
 
+# make a boxplot of all scores
 make_boxplot(scores)

@@ -23,7 +23,7 @@ highest_score = 1000
 highest_cap = 0
 highest_battery_combo = []
 highest_price = 0
-all_scores = []
+scores = []
 
 # try 10 battery locations
 for i in range(10):
@@ -60,7 +60,7 @@ for i in range(10):
         result = makejson(batteries)
         all_cables = get_all_cables(result)
 
-        all_scores.append(all_cables)
+        scores.append(len(all_cables))
 
         # update highest score for current battery location
         if len(all_cables) < highest_score:
@@ -82,4 +82,4 @@ gridplotter(highest)
 
 save_highscore(highscore_file, highest)
 
-make_boxplot(all_scores)
+make_boxplot(scores)

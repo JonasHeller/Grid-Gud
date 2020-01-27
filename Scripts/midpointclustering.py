@@ -82,7 +82,7 @@ for i in range(10):
         # make result and get all cables
         result = makejson(batteries)
         all_cables = get_all_cables(result)
-        scores.append(all_cables)
+        scores.append(len(all_cables))
 
         # update highest score for current battery location
         if len(all_cables) < highest_score:

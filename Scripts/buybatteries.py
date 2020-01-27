@@ -1,7 +1,7 @@
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import random
-from helpers import innit_data, update_battery_location, connect_houses, get_all_cables, save_highscore
+from helpers import innit_data, update_battery_location, connect_houses, get_all_cables, save_highscore, make_boxplot
 from grid import gridplotter
 
 highscore_file = '../Data/wijk3_score_buy_batteries.txt'
@@ -23,6 +23,7 @@ highest_score = 1000
 highest_cap = 0
 highest_battery_combo = []
 highest_price = 0
+all_scores = []
 
 # try 10 battery locations
 for i in range(10):
@@ -59,6 +60,8 @@ for i in range(10):
         result = makejson(batteries)
         all_cables = get_all_cables(result)
 
+        all_scores.append(all_cables)
+
         # update highest score for current battery location
         if len(all_cables) < highest_score:
             highest_score = len(all_cables)
@@ -78,3 +81,5 @@ for i in range(len(highest)):
 gridplotter(highest)
 
 save_highscore(highscore_file, highest)
+
+make_boxplot(all_scores)

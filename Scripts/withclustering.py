@@ -3,7 +3,7 @@ from Battery import Battery
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 from helpers import get_all_cables, get_houses_left, averagex_andy, manhatten_distance, connect_houses, \
-    connect_houses_from_houses, save_highscore, scores_plot
+    connect_houses_from_houses, save_highscore, scores_plot, make_boxplot
 from grid import gridplotter
 import random
 import json
@@ -75,3 +75,5 @@ gridplotter(highest)
 save_highscore(highscore_file, highest)
 
 scores_plot(scores)
+
+make_boxplot(all_scores)

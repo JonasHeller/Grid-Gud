@@ -1,12 +1,12 @@
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import random
-from helpers import innit_data, update_battery_location, connect_houses, get_all_cables, save_highscore
+from helpers import innit_data, update_battery_location, connect_houses, get_all_cables, save_highscore, make_boxplot
 from grid import gridplotter
 
-highscore_file = '../Data/wijk2_score_buy_batteries.txt'
-housespath = '../Data/wijk2_huizen.csv'
-batterypath = '../Data/wijk2_batterijen.csv'
+highscore_file = '../Data/wijk1_score_buy_batteries.txt'
+housespath = '../Data/wijk1_huizen.csv'
+batterypath = '../Data/wijk1_batterijen.csv'
 
 # load houses
 houseslist = loadhouse(housespath)
@@ -78,3 +78,5 @@ for i in range(len(highest)):
 gridplotter(highest)
 
 save_highscore(highscore_file, highest)
+
+make_boxplot(scores)

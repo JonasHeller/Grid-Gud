@@ -4,12 +4,12 @@ from Battery import Battery
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp
-from helpers import get_all_cables, scores_plot
+from helpers import get_all_cables, scores_plot, make_boxplot
 from grid import gridplotter
 
 # set path to the datafiles
-housespath = '../Data/wijk3_huizen.csv'
-batterypath = '../Data/wijk3_batterijen.csv'
+housespath = '../Data/wijk1_huizen.csv'
+batterypath = '../Data/wijk1_batterijen.csv'
 
 # load in data
 houses = loadhouse(housespath)
@@ -18,7 +18,7 @@ batterijennew = loadbattery(batterypath)
 lowpoint = 10000
 scores = []
 
-for i in range(50000):
+for i in range(10000):
     # store the batteries in a dictionary with coords as key and class as value
     batterydict = {}
     for battery in batterijennew:
@@ -123,3 +123,6 @@ print(f"amount of cables: {lowpoint} and the costs: {9 * lowpoint}")
 
 # plot all scores
 scores_plot(scores)
+
+# make boxplot
+make_boxplot(scores)

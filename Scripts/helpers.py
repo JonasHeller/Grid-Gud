@@ -369,3 +369,9 @@ def scores_plot(scores):
     fig = go.Figure([go.Bar(x=list(set(sorted(scores))), y=amount_scores , marker_color=list(set(sorted(scores))))])
     fig.show()
     return
+
+def make_boxplot(scores):
+    fig = go.Figure()
+    fig.add_trace(go.Box(y=scores, name="Scores", marker_color = 'lightseagreen'))
+    fig.show()
+    return 

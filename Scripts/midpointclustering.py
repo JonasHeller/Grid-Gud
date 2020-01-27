@@ -3,7 +3,7 @@
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 from helpers import get_all_cables, get_houses_left, averagex_andy, manhatten_distance, connect_houses,\
-    update_battery_location, innit_data, save_highscore, make_boxplot
+    update_battery_location, innit_data, save_highscore, make_boxplot, scores_plot
 from grid import gridplotter
 import random
 import json
@@ -20,7 +20,7 @@ batterieslist = loadbattery(batterypath)
 highest_score = 1000
 highest = []
 attempt = 0
-all_scores = []
+scores = []
 
 # get a relativly good setup for batteries
 while highest_score > 610:
@@ -82,9 +82,7 @@ for i in range(10):
         # make result and get all cables
         result = makejson(batteries)
         all_cables = get_all_cables(result)
-
-        # save score for boxplot
-        all_scores.append(all_cables)
+        scores.append(all_cables)
 
         # update highest score for current battery location
         if len(all_cables) < highest_score:
@@ -120,4 +118,6 @@ gridplotter(result)
 
 save_highscore(highscore_file, result)
 
-make_boxplot(all_scores)
+scores_plot(scores)
+
+make_boxplot(scores)

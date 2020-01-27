@@ -65,8 +65,6 @@ for i in range(1000):
         print(f'With double cables, loop {attempt}. Number of cables: {len(all_cables)}. Total cost: {9 * len(all_cables)}')
         highest_score = len(all_cables)
         highest = result
-    if int(attempt % 10000) == 0:
-        print(attempt)
 
 print(sorted(scores))
 
@@ -76,4 +74,4 @@ save_highscore(highscore_file, highest)
 
 scores_plot(scores)
 
-make_boxplot(all_scores)
+make_boxplot(scores)

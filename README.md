@@ -7,18 +7,30 @@ made by: Jonas Heller, Krolos Abdou, Justin Bon
 
 ### Goal
 
-In this project the goal was to write and optimize an algorithm that connects all the houses in a grid to a battery using the least amount of cable possible. Minding the different output of each house and the maximum cappacity of each battery.  
+In this project the goal was to write and optimize an algorithm that connects all the houses in a grid to a battery using the least amount of cables possible, minding the different output of each house and the maximum cappacity of each battery.  
 
-We were given three different datasets to test our algorithm. Each has a different placement of the batteries and houses in addition to some minor capacaty differences.  
+We were given three different datasets to test our algorithms. Each has a different placement of the batteries and houses in addition to some minor capacaty differences.  
+
+The project consist of four problems:
+- Random: Find a random solution
+- Optimize the made algorithm
+- Change the places of the batteries
+- Buy different batteries
 
 
-### process
+### Algorithms
 
-Starting with the project the first goal was to succesfully connect all the houses to a battery without going over the maximum capacaty.  
+#### Random
+This algorithm is fairly simple: Connect all houses at random with a battery without exceeding the capacaty. After allocating all the houses connect them using the following algorithm: Check the average X and Y distance from the battery to its connected houses. Based on the result, make the horizontal or vertical path first (This does not matter if cables cannot be shared between houses).
 
-After this we started with optimizing the algorithm and added more heuristics.  
+#### Withclustering
+For this algorithm we use a moddified version of the prim algorithm. First, the algorithm chooses a random battery and allocates the closest house to it. If the battery already has houses allocated to it, choose a house that is closest to the battery or a already connected house (Closest to the cluster as a whole). When all houses are allocated, make the paths to connect them to their battery. The algorithm always tries to connect a house to the closest already laid cable in its network. It also checks if there are houses farther away from it that are on the same X or Y coordinate as to eliminate snaking cables. 
 
-At first each house was connected with a individual cable that was not to be shared by houses. Later the houses were allowed to share cables, this improved our algorithm by a lot. 
+#### Midpointclustering
+This algorithm places all the batteries on random locations but no closer than 15 spaces from another battery. It then allocates all the houses 1000 times and then takes the best result. Then it moves the batteries to the middel of this result. This all is done 10 times to get an optimal result. The pathmaking is the same as in "Withclustering"
+
+#### Buybatteries
+For this task we were allowed to purchase our own desired batteries with different capacaty to cost ratio's. The algorithm makes a random selection of batteries that satisfies the total output of all the houses. It then places them the same way as "Midpointclustering" but does not move them once placed. It then connects the houses the same way as in "Withclustering". This is done 1000 times and the best score is saved. It then makes a new selection of batteries and repeats this process ten times. 
 
 
 ### Repository 
@@ -65,6 +77,11 @@ For random see the docstring comment in makeitjson.py
 
 Just run the file using "python3 {filename.py}"
 
+The files containing the algorithms are:
+- Random.py
+- withclustering.py
+- midpointclustering.py
+- buybatteries.py
 
 ### Copyright
 

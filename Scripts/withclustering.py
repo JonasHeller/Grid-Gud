@@ -9,7 +9,7 @@ import random
 import json
 
 # set paths to data files
-highscore_file = '../Data/wijk1_score.txt'
+highscore_file = '../Score/wijk1_score.txt'
 housespath = '../Data/wijk1_huizen.csv'
 batterypath = '../Data/wijk1_batterijen.csv'
 

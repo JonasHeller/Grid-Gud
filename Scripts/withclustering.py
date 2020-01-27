@@ -3,7 +3,7 @@ from Battery import Battery
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 from helpers import get_all_cables, get_houses_left, averagex_andy, manhatten_distance, connect_houses, \
-    connect_houses_from_houses, save_highscore, scores_plot
+    connect_houses_from_houses, save_highscore, scores_plot, make_boxplot
 from grid import gridplotter
 import random
 import json
@@ -65,8 +65,6 @@ for i in range(1000):
         print(f'With double cables, loop {attempt}. Number of cables: {len(all_cables)}. Total cost: {9 * len(all_cables)}')
         highest_score = len(all_cables)
         highest = result
-    if int(attempt % 10000) == 0:
-        print(attempt)
 
 print(sorted(scores))
 
@@ -75,3 +73,5 @@ gridplotter(highest)
 save_highscore(highscore_file, highest)
 
 scores_plot(scores)
+
+make_boxplot(scores)

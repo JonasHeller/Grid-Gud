@@ -4,7 +4,7 @@ from Battery import Battery
 from loadfiles import loadbattery, loadhouse
 from makeitjson import makejson
 import pprint as pp
-from helpers import get_all_cables
+from helpers import get_all_cables, scores_plot
 from grid import gridplotter
 
 # set path to the datafiles
@@ -16,10 +16,9 @@ houses = loadhouse(housespath)
 batterijennew = loadbattery(batterypath)
 
 lowpoint = 10000
+scores = []
 
-for i in range(10000):
-    print(i)
-
+for i in range(50000):
     # store the batteries in a dictionary with coords as key and class as value
     batterydict = {}
     for battery in batterijennew:
@@ -108,16 +107,19 @@ for i in range(10000):
 
     result = makejson(batterydict)
     all_cables = len(get_all_cables(result))
-
+    scores.append(all_cables)
 
     # if all houses are assigned, reasign the lowest amount of cables
     if len(list(housesdict.keys())) == 0 and all_cables < lowpoint:
         lowpoint = all_cables
         result = makejson(batterydict)
-        print(f" Lowest is {lowpoint}")
+        print(f" Lowest is {lowpoint}. loop: {i}")
 
 # make the plot
 gridplotter(result)
 
 # get the prices
 print(f"amount of cables: {lowpoint} and the costs: {9 * lowpoint}")
+
+# plot all scores
+scores_plot(scores)

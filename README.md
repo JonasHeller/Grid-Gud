@@ -1,11 +1,11 @@
-## Read me
+# Read me
 
 Smart grid project part of the minor programming at the Universety of Amsterdam
 
 Made by: Jonas Heller, Krolos Abdou, Justin Bon
 
 
-### Goal
+## Goal
 
 In this project the goal was to write and optimize an algorithm that connects all the houses in a grid to a battery using the least amount of cables possible, minding the different output of each house and the maximum cappacity of each battery.  
 
@@ -18,7 +18,7 @@ The project consist of four problems:
 - Buy different batteries
 
 
-### Algorithms
+## Algorithms
 
 #### Random
 This algorithm is fairly simple: Connect all houses at random with a battery without exceeding the capacaty. After allocating all the houses connect them using the following algorithm: Check the average X and Y distance from the battery to its connected houses. Based on the result, make the horizontal or vertical path first (This does not matter if cables cannot be shared between houses).
@@ -33,7 +33,7 @@ This algorithm places all the batteries on random locations but no closer than 1
 For this task we were allowed to purchase our own desired batteries with different capacaty to cost ratio's. The algorithm makes a random selection of batteries that satisfies the total output of all the houses. It then places them the same way as "Midpointclustering" but does not move them once placed. It then connects the houses the same way as in "Withclustering". This is done 1000 times and the best score is saved. It then makes a new selection of batteries and repeats this process ten times. 
 
 
-### Repository 
+## Repository 
 
 This respository consists of some documentation, a data folder, a scripts folder and a scores folder. 
 
@@ -61,7 +61,7 @@ These files do the following:
 
 The scores folder includes all our top scores in Json format. 
 
-### Running it yourself
+## Running it yourself
 
 To run the project yourself just download the repository and navigate to the folder in a terminal/cmd.
 
@@ -79,7 +79,7 @@ The files containing the algorithms are:
 - midpointclustering.py
 - buybatteries.py
 
-### Copyright
+## Copyright
 
 © 2020 All rights reserved 
 
